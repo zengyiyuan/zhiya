@@ -1,0 +1,99 @@
+<!--pages/orderDesc/orderDesc.wxml-->
+<!-- 视频框 -->
+<view class='fixed'>
+  <video src="{{orderDesc.vedioUrl}}" object-fit="contain" enable-play-gesture="true" controls poster="{orderDesc.vedioImg}}" bindplay="getsrc"></video>
+
+  <!-- <view wx:if="{{isbuy==0}}" class='mask'>
+  <image src="{{orderDesc.orderImg}}"></image>
+  <button bindtap="toOrderPay" class='text-price'>{{orderDesc.inspectPrice}}付费观摩</button>
+ </view> -->
+  <!-- tab切换 -->
+  <scroll-view scroll-x class="bg-white nav">
+    <view class='flex text-center'>
+      <view class="cu-item flex-sub {{index==TabCur?'text-cyan cur':''}}" wx:for="{{tab}}" wx:key bindtap='tabSelect' data-id="{{index}}">
+        {{ item}}
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 不同tab下的内容 -->
+<!-- 商品详细 -->
+<view class='desc' wx:if="{{TabCur==0}}">
+  <!-- 面试简介 -->
+  <view class='info'>
+    <view class='title'>{{orderDesc.title}}</view>
+  </view>
+  <view class="face hot">
+    <view class="meeting-mode">
+      <view class="title">
+        <text>面试视频</text>
+        <text class="icon icon-right"></text>
+      </view>
+      <view class="meeting-container" id="interviewOrderVedioList">
+        <view class="grid col-2 cu-card case {{isCard?'no-card':''}}">
+          <view wx:for="{{videoList}}" wx:key="index" class="cu-item" data-videoid="{{item.vedioId}}" catchtap='goVideoDesc' data-index="{{index}}">
+            <view class='image'>
+              <image src="{{item.vedioImg}}" mode="widthFix"></image>
+              <view class='cu-bar bg-shadeBottom'>
+                <text>{{item.visitNum||0}}人观摩</text>
+              </view>
+            </view>
+            <view class="cu-list menu menu-avatar">
+              <view class="cu-item">
+                <view class='content flex-sub'>
+                  <view class='text-grey facetitle'>{{item.title}}</view>
+                  <view class='text-gray text-sm flex justify-between facewriter'>
+                    {{item.writer}}
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<!-- 评论 -->
+<view class='comment' wx:if="{{TabCur==1}}">
+  <view class="cu-list menu menu-avatar comment solids-top">
+    <view class="cu-item" wx:for="{{commentList}}" wx:key="index">
+      <view class="cu-avatar round" style="background-image:url({{item.customerHeadPortrait}});"></view>
+      <view class='content'>
+        <view class='text-grey'>{{item.customerName}}</view>
+        <view class='text-gray text-content text-df'>
+          {{item.evaluateContent}}
+        </view>
+        <!-- <view class='bg-grey padding-sm radius margin-top-sm  text-sm' wx:if="{{index==1}}">
+          <view class="flex {{index!=0?'margin-top-sm':'' }}" wx:for="{{2}}" wx:key>
+            <view>我：</view>
+            <view class='flex-sub'>我家的铲屎官也不舔毛！</view>
+          </view>
+        </view> -->
+        <view class='margin-top-sm flex justify-between'>
+          <view class='text-gray text-df'>{{item.updateDate}}</view>
+          <view>
+            <text class="icon-appreciate{{!isZan?'fill':''}} text-{{!isZan?'red':'gray'}}"></text>
+            <text class="icon-messagefill text-gray margin-left-sm" bandtap="comment"></text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 底部评论bar -->
+<view class='bottom'>————优秀的人也是有底线的————</view>
+<view class="cu-bar bg-white search" style='position:fixed; bottom:0;width: 750rpx;'>
+  <view class='search-form round'>
+    <text class="icon-write text-xxl"></text>
+    <input type="text" placeholder="评论" confirm-type="send" bindconfirm='toComment' value='{{defaultValue}}'></input>
+  </view>
+  <view class='text-xxl mystatu'>
+    <text class="icon-favor{{isFavor?'fill':''}} text-{{isFavor?'cyan':'gray'}}" catchtap='setFavor'></text>
+    <text class=" icon-appreciate{{isZan?'fill':''}} text-{{isZan?'cyan':'gray'}}" catchtap='setZan'></text>
+  </view>
+
+</view>

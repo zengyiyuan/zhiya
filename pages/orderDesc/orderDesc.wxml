@@ -1,0 +1,124 @@
+<!--pages/orderDesc/orderDesc.wxml-->
+<!-- 视频框 -->
+<view class='fixed'>
+  <video wx:if="{{isbuy==1}}" src="{{orderDesc.resumeUrl}}" object-fit="contain" enable-play-gesture="true" controls poster="{orderDesc.orderImg}}" bindplay="getsrc"></video>
+
+  <view wx:if="{{isbuy==0}}" class='mask'>
+    <image src="{{orderDesc.orderImg}}"></image>
+    <button bindtap="toOrderPay" class='cu-btn round lines-cyan text-cyan'>{{orderDesc.inspectPrice}}付费观摩</button>
+  </view>
+  <!-- tab切换 -->
+  <scroll-view scroll-x class="bg-white nav">
+    <view class='flex text-center'>
+      <view class="cu-item flex-sub {{index==TabCur?'text-cyan cur':''}}" wx:for="{{tab}}" wx:key bindtap='tabSelect' data-id="{{index}}">
+        {{ item}}
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 不同tab下的内容 -->
+<!-- 商品详细 -->
+<view class='desc' wx:if="{{TabCur==0}}">
+  <view class="cu-list grid col-3">
+    <view class="cu-item ">
+      <view class='avartar'>
+        <image class='lg cu-avatar avatar1' src="{{orderDesc.customerHeadPortrait}}"></image>
+        <image class='xl cu-avatar bgavatar' src="../../image/avatar1.png"></image>
+      </view>
+      <text>{{orderDesc.customerName}}</text>
+      <text>{{orderDesc.university}}{{orderDesc.profession}}</text>
+    </view>
+    <view class="cu-item pk">
+      <view>
+        <image class='cu-avatar lg' src="../../image/recipe.png"></image>
+      </view>
+      <text>{{orderDesc.applicationPosition}}</text>
+    </view>
+    <view class="cu-item ">
+      <view class='avartar'>
+        <image class='lg cu-avatar avatar1' src="{{orderDesc.interviewerHeadPortrait}}"></image>
+        <image class='xl cu-avatar bgavatar' src="../../image/avatar2.png"></image>
+      </view>
+
+      <text>{{orderDesc.interviewerName}}</text>
+      <text>{{orderDesc.interviewerCompany}}{{orderDesc.interviewerPosition}}</text>
+    </view>
+  </view>
+  <!-- 面试简介 -->
+  <view class='info'>
+    <view class='title'>{{orderDesc.title}}</view>
+    <view class='content'>
+      <view class='sTitle'>面试简介</view>
+      <view class='subcontent'>
+        {{orderDesc.detail}}
+      </view>
+    </view>
+    <view class='content' wx:if="{{!orderDesc.isOpen}}">
+      <view class='sTitle'>面试评语</view>
+      <view class='subcontent'>
+        我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是</view>
+    </view>
+  </view>
+  <!-- 相关面约 -->
+  <view class="hot about">
+    <view class="meeting-mode">
+      <view class="title">
+        <text>相关约面</text>
+        <text class="icon icon-right"></text>
+      </view>
+      <view class="meeting-container" id="interviewOrderVedioList">
+        <view class="cu-card case {{isCard?'no-card':''}}">
+          <view wx:for="{{orderList}}" wx:key="index" class="cu-item" data-id="{{item.orderId}}" bindtap="goOrderDesc">
+            <view class='image'>
+              <image src="{{item.orderImg}}" mode="widthFix"></image>
+              <view class="cu-tag bg-yellow">福利</view>
+              <view class='cu-bar bg-shadeBottom'>
+                <text>{{item.inspectNum||0}}人观摩</text>
+              </view>
+            </view>
+            <view class="cu-list menu menu-avatar">
+              <view class="cu-item">
+                <view class='content flex-sub'>
+                  <view class='text-grey'>{{item.title}}</view>
+                  <view class='text-gray text-sm flex justify-between'>
+                    {{item.keyWords}}
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 评论 -->
+<view class='comment' wx:if="{{TabCur==1}}">
+  <view class="cu-list menu menu-avatar comment solids-top">
+    <view class="cu-item" wx:for="{{commentList}}" wx:key="index">
+      <view class="cu-avatar round" style="background-image:url({{item.customerHeadPortrait}});"></view>
+      <view class='content'>
+        <view class='text-grey'>{{item.customerName}}</view>
+        <view class='text-gray text-content text-df'>
+          {{item.evaluateContent}}
+        </view>
+        <!-- <view class='bg-grey padding-sm radius margin-top-sm  text-sm' wx:if="{{index==1}}">
+          <view class="flex {{index!=0?'margin-top-sm':'' }}" wx:for="{{2}}" wx:key>
+            <view>我：</view>
+            <view class='flex-sub'>我家的铲屎官也不舔毛！</view>
+          </view>
+        </view> -->
+        <view class='margin-top-sm flex justify-between'>
+          <view class='text-gray text-df'>{{item.updateDate}}</view>
+          <view>
+            <text class="icon-appreciate{{!isZan?'fill':''}} text-{{!isZan?'red':'gray'}}"></text>
+            <text class="icon-messagefill text-gray margin-left-sm" bandtap="comment"></text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 底部评论bar -->
+<view class='bottom'>————优秀的人也是有底线的————</view>

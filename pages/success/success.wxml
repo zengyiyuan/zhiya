@@ -1,0 +1,14 @@
+<view class="mys">
+<view class=" text-xsl text-center padding">
+  <text class='text-green icon-check success'></text>
+</view>
+<view class='title text-xxl text-center padding'>
+  <text class='text-grey'>订单支付成功</text>
+</view>
+<view class='title text-xxl text-center padding'>
+ <button class='bg-green text-white' bindtap="goOrderDesc">查看订单详情</button>
+</view>
+<view class='title text-xxl text-center padding '>
+ <button class='bg-orange text-white' bindtap="goIndex">返回首页</button>
+</view>
+</view>

@@ -1,0 +1,94 @@
+<view class='mask' wx:if="{{show}}" bindtap='changeShow'></view>
+<view class="cu-bar search bg-white mysearch" wx:if="{{!show}}">
+  <view class='search-form round' bind:tap="onFocus">
+    <view class='search' wx:if="{{!flag||words.length>0}}">
+      <input type="text" placeholder="搜索约面/视频" confirm-type="search" bindconfirm="gosearch" value='{{words}}' bindinput='onChange'></input>
+      <text class="icon-search" bindtap='gosearch'></text>
+    </view>
+    <text class='searchwords' wx:if="{{flag}}"><text class="icon-search"></text>搜索约面/视频</text>
+  </view>
+  <view class='action'>
+    <button class='cu-btn  shadow-blur round' bindtap='cancel' wx:if="{{!flag||words}}">取消</button>
+  </view>
+</view>
+
+<view class='searchDetail' wx:if="{{!flag}}">
+  <view class='myhot'>热门搜索</view>
+  <view class='box'>
+    <view class="{{index==barCur?'current bar':'bar'}}" wx:for="{{hotwords}}" wx:key="index" bindtap='changeCur' data-id="{{index}}">{{item}}</view>
+  </view>
+  <view class='hr'>
+  </view>
+  <view class='history'>
+    <text>历史搜索</text>
+    <icon class='icon-delete'></icon>
+  </view>
+</view>
+<view class='mycontent' wx:if="{{flag}}">
+
+  <!-- 轮播图 -->
+  <view class='myswiper'>
+    <swiper class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+      <swiper-item wx:for="{{swiper}}" wx:key="index">
+        <image src="{{item}}.png" mode='widthFix'></image>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- tab -->
+  <view class="nav {{show?'mynav':''}}">
+    <view class="nav-son {{shownavindex == 1&show? 'active' : ''}}" bindtap="showCity">
+      <view class="content">全部</view>
+      <view class="icon-playfill"></view>
+    </view>
+    <view class="nav-son {{shownavindex == 3&show? 'active' : ''}}" bindtap="select" data-nav="3">
+      <view class="content">筛选</view>
+        <view class="icon-playfill"></view>
+    </view>
+  </view>
+  <!--  -->
+  <view class='wrapper' wx:if="{{tabCur==0&show}}">
+  <view class="sort {{sortsCur==index?'current':''}}" wx:for="{{sorts}}" bindtap="getsort" data-sort="{{index}}" wx:key="index">{{item}}</view>
+  </view>
+  
+  <view class='searchDetail myselect' wx:if="{{tabCur==2&show}}">
+  <view class='myhot'>视频内容包含（可多选）</view>
+  <view class='box'>
+    <view class="{{index==selectCur?'current bar':'bar'}}" wx:for="{{select}}" wx:key="index" bindtap='selectCur' data-id="{{item.classifyId-1}}">{{item.name}}</view>
+  </view>
+   <view class='form-btn'>
+      <button class='btn-reset' bindtap='selectEmpty'>重置</button>
+      <button class='btn-submit' bindtap='selectconfirm'>确定</button>
+    </view>
+</view>
+</view>
+
+ <!-- 热门视频 -->
+ <view class="face hot">
+    <view class="meeting-mode">
+      <view class="meeting-container" id="interviewOrderVedioList">
+        <view class="grid col-2 cu-card case {{isCard?'no-card':''}}">
+          <view wx:for="{{videoList}}" wx:key="index" class="cu-item" data-videoid="{{item.vedioId}}" catchtap='goVideoDesc' data-index="{{index}}">
+            <view class='image'>
+              <image src="{{item.vedioImg}}" mode="widthFix"></image>
+              <view class='cu-bar bg-shadeBottom'>
+                <text>{{item.visitNum||0}}人观摩</text>
+              </view>
+            </view>
+            <view class="cu-list menu menu-avatar">
+              <view class="cu-item">
+                <view class='content flex-sub'>
+                  <view class='text-grey facetitle'>{{item.title}}</view>
+                  <view class='text-gray text-sm flex justify-between facewriter'>
+                    {{item.writer}}
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='bottom'>————优秀的人也是有底线的————</view>
+<!-- </view> -->

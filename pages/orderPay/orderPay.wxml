@@ -1,0 +1,24 @@
+<view class='mask'>
+  <image src="{{pic}}"></image>
+</view>
+<view class='info'>
+  <view class='title'>{{title}}</view>
+  <view class='content'>{{keyWords}}</view>
+</view>
+<view class='info'>
+  <view class='styletitle title'>支付方式</view>
+  <checkbox-group>
+  <view class="cu-form-group" bindtap='checkChange'>
+    <view class='stitle'><text class='icon-ticket myweixin text-red text-xxl'></text>优惠券</view>
+    <checkbox class='round cyan' value='1'></checkbox>
+  </view>
+  <view class="cu-form-group">
+    <view class='stitle'><text class='icon-weixin myweixin text-green text-xxl'></text>微信支付</view>
+    <checkbox class='round cyan' checked value='2'></checkbox>
+  </view>
+  </checkbox-group>
+</view>
+<view class="cu-bar bg-white tabbar border shop myfixed">
+  <view class='bg-white submit mymoney'>金额：<text class='text-cyan text-price'>{{inspectPrice||0.01}}</text></view>
+  <view class='bg-cyan submit' bindtap='goPay'>立即订购</view>
+</view>

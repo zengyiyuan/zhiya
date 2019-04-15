@@ -1,0 +1,17 @@
+
+  <view class='hot'>热门搜索</view>
+  <view class='box'>
+  <view class='bar current'>英语</view>
+  <view class='bar'>开发</view>
+  <view class='bar'>UI</view>
+  <view class='bar'>平面设计</view>
+  <view class='bar'>视觉设计</view>
+  <view class='bar'>华为</view>
+  <view class='bar'>小米</view>
+  </view>
+  <view class='hr'>
+  </view>
+  <view class='history'><text>历史搜索</text>
+  <icon class='icon-delete'>删除</icon>
+  </view>
+
