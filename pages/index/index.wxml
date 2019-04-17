@@ -1,14 +1,14 @@
 <!--index.wxml-->
 <view class="cu-bar search bg-white mysearch">
-  <view class='search-form round' bind:tap="onFocus">
+  <view class='search-form round myform' bind:tap="onFocus">
     <view class='search' wx:if="{{!flag||words.length>0}}">
       <input type="text" placeholder="搜索约面/视频" confirm-type="search" bindconfirm="gosearch" value='{{words}}' bindinput='onChange'></input>
-      <text class="icon-search" bindtap='gosearch'></text>
+      <text class="icon-search text-xl" bindtap='gosearch'></text>
     </view>
     <text class='searchwords' wx:if="{{flag}}"><text class="icon-search"></text>搜索约面/视频</text>
   </view>
-  <view class='action'>
-    <button class='cu-btn  shadow-blur round' bindtap='cancel' wx:if="{{!flag||words}}">取消</button>
+  <view class='action' wx:if="{{!flag||words}}">
+    <button class='cu-btn  shadow-blur round' bindtap='cancel'>取消</button>
   </view>
 </view>
 
@@ -38,23 +38,23 @@
     <view class="meeting-mode">
       <view class="title">
         <text>热门约面</text>
-        <text class="icon icon-right"></text>
+        <text class="icon icon-right" catchtap='goReservation'></text>
       </view>
       <view class="meeting-container" id="interviewOrderVedioList">
         <view class="cu-card case {{isCard?'no-card':''}}">
           <view wx:for="{{orderList}}" wx:key="index" class="cu-item" data-id="{{item.orderId}}" bindtap="goOrderDesc">
             <view class='image'>
               <image src="{{item.orderImg}}" mode="widthFix"></image>
-              <view class="cu-tag bg-yellow">福利</view>
+              <!-- <view class="cu-tag bg-yellow">vip</view> -->
               <view class='cu-bar bg-shadeBottom'>
-                <text>{{item.inspectNum||0}}人观摩</text>
+                <text>{{item.inspectNum||0}}人观看</text>
               </view>
             </view>
             <view class="cu-list menu menu-avatar">
               <view class="cu-item">
                 <view class='content flex-sub'>
-                  <view class='text-grey'>{{item.title}}</view>
-                  <view class='text-gray text-sm flex justify-between'>
+                  <view class='text-black'>{{item.title}}</view>
+                  <view class='text-grey text-sm flex justify-between'>
                     {{item.keyWords}}
                   </view>
                 </view>
@@ -66,26 +66,26 @@
     </view>
   </view>
   <!-- 面试视频 -->
-  <view class="face hot">
+  <view class="face">
     <view class="meeting-mode">
       <view class="title">
         <text>面试视频</text>
-        <text class="icon icon-right"></text>
+        <text class="icon icon-right" catchtap='goVideo'></text>
       </view>
       <view class="meeting-container" id="interviewOrderVedioList">
         <view class="grid col-2 cu-card case {{isCard?'no-card':''}}">
           <view wx:for="{{videoList}}" wx:key="index" class="cu-item" data-videoId="{{item.vedioId}}" catchtap='goVideoDesc' data-index="{{index}}">
             <view class='image'>
               <image src="{{item.vedioImg}}" mode="widthFix"></image>
-              <view class='cu-bar bg-shadeBottom'>
-                <text>{{item.visitNum||0}}人观摩</text>
+              <view class='cu-bar'>
+                <text class='text-white'>{{item.visitNum||0}}人观看</text>
               </view>
             </view>
             <view class="cu-list menu menu-avatar">
               <view class="cu-item">
                 <view class='content flex-sub'>
-                  <view class='text-grey facetitle'>{{item.title}}</view>
-                  <view class='text-gray text-sm flex justify-between facewriter'>
+                  <view class='text-black facetitle'>{{item.title}}</view>
+                  <view class='text-grey text-sm flex justify-between facewriter'>
                     {{item.writer}}
                   </view>
                 </view>

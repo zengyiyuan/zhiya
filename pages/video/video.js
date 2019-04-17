@@ -66,7 +66,7 @@ Page({
   },
   getsort(e){
     var that =this;
-    this.setData({sortsCur:e.currentTarget.dataset.sort});
+    this.setData({sortsCur:e.currentTarget.dataset.sort,show:false});
     console.log(this.data.sortsCur);
     wx.request({
       url: host + 'searchDiscoveryVedio.json?beginNum=0&pageSize=8&sortType=' + that.data.sortsCur + '&keyWords=' + that.data.words + '&cateId=',
@@ -149,6 +149,7 @@ Page({
   onLoad: function (options) {
     this.getVideoList();
     this.getSelect();
+    this.swiper();
     if (options) {
       console.log(options)
       var words = options.keywords;

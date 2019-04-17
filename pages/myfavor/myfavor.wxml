@@ -1,28 +1,26 @@
 <view class="my-nav bg-white mynav fixed">
-      <view class="cu-item {{index==tabCur?'current':''}} " wx:for="{{navlist}}" wx:key bindtap='tabSelect' data-id="{{index}}">
-        {{item}}
-      </view>
+  <view class="cu-item {{index==tabCur?'current':''}} " wx:for="{{navlist}}" wx:key bindtap='tabSelect' data-id="{{index}}">
+    {{item}}
   </view>
+</view>
 
- <view class="hot" wx:if="{{tabCur==0}}">
-    <view class="meeting-mode">
-      <view class="meeting-container" id="interviewOrderVedioList">
-        <view class="cu-card case {{isCard?'no-card':''}}">
-          <view wx:for="{{orderList}}" wx:key="index" class="cu-item" data-id="{{item.orderId}}" bindtap="goOrderDesc">
-            <view class='image'>
-              <image src="{{item.orderImg}}" mode="widthFix"></image>
-              <view class="cu-tag bg-yellow">福利</view>
-              <view class='cu-bar bg-shadeBottom'>
-                <text>{{item.inspectNum||0}}人观摩</text>
-              </view>
+<view class="hot" wx:if="{{tabCur==0}}">
+  <view class="meeting-mode">
+    <view class="meeting-container" id="interviewOrderVedioList">
+      <view class="cu-card case {{isCard?'no-card':''}}">
+        <view wx:for="{{orderList}}" wx:key="index" class="cu-item" data-id="{{item.orderId}}" bindtap="goOrderDesc">
+          <view class='image'>
+            <image src="{{item.orderImg}}" mode="widthFix"></image>
+            <view class='cu-bar bg-shadeBottom'>
+              <text>{{item.inspectNum||0}}人观摩</text>
             </view>
-            <view class="cu-list menu menu-avatar">
-              <view class="cu-item">
-                <view class='content flex-sub'>
-                  <view class='text-grey'>{{item.title}}</view>
-                  <view class='text-gray text-sm flex justify-between'>
-                    {{item.keyWords}}
-                  </view>
+          </view>
+          <view class="cu-list menu menu-avatar">
+            <view class="cu-item">
+              <view class='content flex-sub'>
+                <view class='text-black'>{{item.title}}</view>
+                <view class='text-grey text-sm flex justify-between'>
+                  {{item.keyWords}}
                 </view>
               </view>
             </view>
@@ -31,25 +29,25 @@
       </view>
     </view>
   </view>
-  <!-- 面试视频 -->
-  <view class="face hot" wx:if="{{tabCur==1}}">
-    <view class="meeting-mode">
-      <view class="meeting-container" id="interviewOrderVedioList">
-        <view class="grid col-2 cu-card case {{isCard?'no-card':''}}">
-          <view wx:for="{{4}}" wx:key class="cu-item">
-            <view class='image'>
-              <image src="https://image.weilanwl.com/img/4x3-1.jpg" mode="widthFix"></image>
-              <view class='cu-bar bg-shadeBottom'>
-                <text>{{item.see||0}}人观摩</text>
-              </view>
+</view>
+<!-- 面试视频 -->
+<view class="face" wx:if="{{tabCur==1}}">
+  <view class="meeting-mode">
+    <view class="meeting-container" id="interviewOrderVedioList">
+      <view class="grid col-2 cu-card case {{isCard?'no-card':''}}">
+        <view wx:for="{{videoList}}" wx:key="index" class="cu-item" data-videoId="{{item.vedioId}}" catchtap='goVideoDesc' data-index="{{index}}">
+          <view class='image'>
+            <image src="{{item.vedioImg}}" mode="widthFix"></image>
+            <view class='cu-bar'>
+              <text class='text-white'>{{item.visitNum||0}}人观摩</text>
             </view>
-            <view class="cu-list menu menu-avatar">
-              <view class="cu-item">
-                <view class='content flex-sub'>
-                  <view class='text-grey'>猪皮蛋</view>
-                  <view class='text-gray text-sm flex justify-between'>
-                    十天前
-                  </view>
+          </view>
+          <view class="cu-list menu menu-avatar">
+            <view class="cu-item">
+              <view class='content flex-sub'>
+                <view class='text-black facetitle'>{{item.title}}</view>
+                <view class='text-grey text-sm flex justify-between facewriter'>
+                  {{item.writer}}
                 </view>
               </view>
             </view>
@@ -58,4 +56,5 @@
       </view>
     </view>
   </view>
+</view>
 <view class='bottom'>————优秀的人也是有底线的————</view>

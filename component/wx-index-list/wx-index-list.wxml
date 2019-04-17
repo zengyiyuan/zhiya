@@ -16,7 +16,7 @@
             <view id="{{'index'+index}}" wx:for="{{list}}" wx:key="key">
                 <view class='list-title fixed-title-hock'>{{item.title}}</view>
                 <view class='{{config.horizontal&&item.type==="hot" || item.type==="hot"?"list-horizontal":""}}'>
-                    <view class='list-name {{idx === 0 ?"":"border"}}' wx:for="{{item.item}}" wx:for-item="city" wx:for-index="idx" wx:key="city" data-detail="{{city}}" catchtap='detailMt'>
+                    <view wx:for="{{item.item}}" wx:for-item="city" wx:for-index="idx" wx:key="city" data-detail="{{city}}" catchtap='detailMt' class='list-name {{myitem===item.item?"current":""}} {{idx === 0 ?"":"border"}}' >
                         {{city.name}}
                     </view>
                 </view>

@@ -24,7 +24,8 @@ App({
                     success: res => {
                   
                      var  userInfo = JSON.parse(res.rawData)
-                      // 可以将 res 发送给后台解码出 unionId
+                      
+                      
                         that.globalData.userInfo = JSON.parse(res.rawData);
                       that.cb = function (res) {
                         // console.log(.globalData.userInfo)

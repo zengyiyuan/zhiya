@@ -39,12 +39,13 @@ page {
 }
 .name input {
   /* width: 80%; */
-  padding: 30rpx 30rpx;
+  padding: 30rpx 40rpx;
   line-height: 90rpx;
-  height: 90rpx;
+  height: 100rpx;
   background-color: #fff;
   font-size: 36rpx;
   margin-bottom: 40rpx;
+  box-sizing: border-box;
 }
 .name button {
   width: 90%;

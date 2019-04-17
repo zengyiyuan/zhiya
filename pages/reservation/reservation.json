@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "约面",
   "usingComponents": {
     "list-html": "/component/wx-index-list/wx-index-list"}
 }

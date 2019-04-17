@@ -14,6 +14,7 @@ Page({
     orderId:0,
     orderList:[],
     isbuy:0,
+    isPlay:false,
     orderDesc:{},
     pageVideoSize:3,
     pageCommentSize: 3,
@@ -21,6 +22,7 @@ Page({
     isZan:false,
     defaultValue:'',
     commentList:[],
+    isMore:false,
   },
   tabSelect(e) {
     console.log(e);
@@ -29,10 +31,16 @@ Page({
       scrollLeft: (e.currentTarget.dataset.id-1)*60
     })
   },
+  showMore(){
+    this.setData({isMore:!this.data.isMore})
+  },
   // 获取视频地址
   getsrc(){
     // console.log(111)
     this.setData({ src:'../../video/video/59b6bb1098e51.mp4'})
+  },
+  toPlay(){
+    this.setData({isPlay:true})
   },
   // 去订单支付页
   toOrderPay(){
@@ -43,26 +51,29 @@ Page({
     })
   },
   // 评论
-  toComment(e){
+  setValue(e) {
+    this.setData({ defaultValue: e.detail.value })
+  },
+  // 评论
+  toComment() {
     var that = this;
-    var value = e.detail.value;
-    console.log(value);
+    console.log(this.data.defaultValue);
     wx.request({
-      url: api +'addWxInterviewOrderEvaluate.json',
-      method:'post',
-      data: {"parentId":0,"orderId": that.data.orderId, "evaluateContent": value},
-      header:{"cookie":"customerId="+wx.getStorageSync("customerId")},
-      success(res){
+      url: api + 'addWxDiscoveryEvaluate.json',
+      method: 'post',
+      data: { "parentId": 0, "vedioId": that.data.orderId, "evaluateContent": that.data.defaultValue },
+      header: { 'content-type': 'application/x-www-form-urlencoded', "cookie": "customerId=" + wx.getStorageSync("customerId") },
+      success(res) {
         console.log(res)
         that.setData({ defaultValue: '' });
         wx.showToast({
           title: '评论成功',
-        
+
         })
       }
     })
-   
-  
+
+
   },
   // 获取相关面约
   getAbout(){
@@ -90,8 +101,8 @@ Page({
       wx.request({
         url: api +'cancelCustomerCollect.json',
         method: 'post',
-        data: { dataId: this.data.orderId, type: "2" },
-        header: { "cookie": 'customerId=' + wx.getStorageSync('customerId') },
+        data: { dataId: this.data.orderId, type: "1" },
+        header: { "content-type":"application/x-www-form-urlencoded", "cookie": 'customerId=' + wx.getStorageSync('customerId') },
         success(res) {
           console.log(res);
           if (res.errMsg == "request:ok") {
@@ -104,8 +115,8 @@ Page({
       wx.request({
         url: api + 'addCustomerCollect.json',
         method: 'post',
-        data: { dataId: this.data.orderId, type: "2" },
-        header: { "cookie": 'customerId=' + wx.getStorageSync('customerId') },
+        data: { dataId: this.data.orderId, type: "1" },
+        header: { "content-type": "application/x-www-form-urlencoded", "cookie": 'customerId=' + wx.getStorageSync('customerId') },
         success(res) {
           console.log(res);
           if (res.errMsg == "request:ok") {
@@ -124,7 +135,7 @@ Page({
         url: api + 'cancelCustomerPraise.json',
         method: 'post',
         data: { dataId: this.data.orderId, type: "1" },
-        header: { "cookie": 'customerId=' + wx.getStorageSync('customerId') },
+        header: { "content-type": "application/x-www-form-urlencoded", "cookie": 'customerId=' + wx.getStorageSync('customerId') },
         success(res) {
           console.log(res);
           if (res.errMsg == "request:ok") {
@@ -137,7 +148,7 @@ Page({
         url: api + 'addCustomerPraise.json',
         method: 'post',
         data: { dataId: this.data.orderId, type: "1" },
-        header: { "cookie": 'customerId=' + wx.getStorageSync('customerId') },
+        header: { "content-type": "application/x-www-form-urlencoded","cookie": 'customerId=' + wx.getStorageSync('customerId') },
         success(res) {
           console.log(res);
           if (res.errMsg == "request:ok") {

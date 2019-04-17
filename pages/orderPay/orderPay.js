@@ -1,4 +1,5 @@
 // pages/orderPay/orderPay.js
+const {host,api} = require('../../config.js')
 Page({
 
   /**
@@ -20,12 +21,7 @@ Page({
     var that = this;
     if (!this.data.inspectId) {
       wx.request({
-        url: 'https://openapi.zhiyajob.com:8443/openapi/addInterviewInspectForWeb.json',
-        data: {
-          orderId: this.data.orderId,
-          payType: 2,
-          customerId: wx.getStorageSync("customerId")
-        },
+        url: host + 'addInterviewInspectForWeb.json?orderId='+that.data.orderId+'&payType=2&customerId='+wx.getStorageSync("customerId"),
         success(res) {
           console.log(res)
           var inspectId = res.data.inspectId;
@@ -84,7 +80,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    
     var that = this;
     var item = JSON.parse(options.orderId);
     if (item.interviewOrder) {

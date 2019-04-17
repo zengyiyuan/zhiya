@@ -9,7 +9,7 @@ Page({
     words: '',
     value: '',
     hotwords: ['英语', '开发','UI','平面设计','视觉设计','华为','小米'],
-    swiper:['../../image/swiper1'],
+    swiper:[],
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -18,10 +18,9 @@ Page({
     pageSize:3
   },
   changeCur(e){
-    this.setData({barCur:e.currentTarget.dataset.id})
-    console.log(this.data.barCur);
-    this.setData({flag:true})
-    this.setData({words:this.data.hotwords[this.data.barCur]})
+    this.setData({barCur:e.currentTarget.dataset.id,flag:true,words:this.data.hotwords[e.currentTarget.dataset.id]})
+    console.log(this.data.barCur);  
+    // this.setData({words:e.detail.words})
   },
   onChange(e) {
     // console.log('onChange', e)
@@ -41,6 +40,16 @@ Page({
   gosearch(e){
     console.log(this.data.value);
     this.setData({words:this.data.value})
+  },
+  goReservation(){
+    wx.switchTab({
+      url: '/pages/reservation/reservation',
+    })
+  },
+  goVideo(){
+    wx.switchTab({
+      url: '/pages/video/video',
+    })
   },
   // 去面约详细页
   goOrderDesc(e){
@@ -65,7 +74,6 @@ Page({
     var that = this;
     wx.request({
       url: 'https://openapi.zhiyajob.com:8443/openapi/querySysBannerList.json?channelType=2&bannerType=4',
-      header: { "Cache-Control": "max-age=3600, must-revalidate"},
       success(res){
         console.log(res.data)
         that.setData({
