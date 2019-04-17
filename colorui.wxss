@@ -7,7 +7,7 @@ page {
   font-family: Helvetica Neue, Helvetica, sans-serif;
 }
 
-view, text, scroll-view, swiper, button, form, input, textarea, label, navigator,
+view, text, scroll-view, swiper, button, form, input, textarea,label, navigator,
 image {
   box-sizing: border-box;
 }
@@ -168,7 +168,7 @@ radio.green[checked] .wx-radio-input {
 
 switch.cyan[checked] .wx-switch-input, checkbox.cyan[checked] .wx-checkbox-input,
 radio.cyan[checked] .wx-radio-input {
-  border-color: #1cbbb4 !important;
+  border-color: #00BCD4 !important;
 }
 
 switch.blue[checked] .wx-switch-input, checkbox.blue[checked] .wx-checkbox-input,
@@ -252,7 +252,7 @@ radio.green[checked] .wx-radio-input, radio[checked] .wx-radio-input {
 
 switch.cyan[checked] .wx-switch-input, checkbox.cyan[checked] .wx-checkbox-input,
 radio.cyan[checked] .wx-radio-input {
-  background-color: #1cbbb4 !important;
+  background-color: #00BCD4 !important;
   color: #fff !important;
 }
 
@@ -2133,7 +2133,7 @@ button.icon.lg {
   box-sizing: border-box;
 }
 
-.cu-form-group textarea, .cu-form-group textarea textarea {
+/* .cu-form-group textarea, .cu-form-group textarea textarea {
   margin: 32rpx 0 30rpx;
   height: 4.8em;
   width: 100%;
@@ -2144,12 +2144,12 @@ button.icon.lg {
   box-sizing: content-box;
   display: inline-block;
   vertical-align: top;
-}
+} */
 
-.cu-form-group textarea::after {
+/* .cu-form-group textarea::after {
   content: "文字";
   opacity: 0;
-}
+} */
 
 .cu-form-group .grid-square {
   margin: 20rpx 0 0;
@@ -2188,10 +2188,7 @@ button.icon.lg {
   margin: auto;
 }
 
-.cu-form-group textarea[disabled],
-.cu-form-group textarea[disabled] .placeholder {
-  color: transparent;
-}
+
 
 /* ==================
          模态窗口
@@ -3091,7 +3088,7 @@ scroll-view.cu-steps .cu-item {
 }
 
 .line-cyan::after, .lines-cyan::after {
-  border-color: #1cbbb4;
+  border-color: #00BCD4;
 }
 
 .line-blue::after, .lines-blue::after {
@@ -3156,7 +3153,7 @@ scroll-view.cu-steps .cu-item {
 }
 
 .bg-cyan {
-  background-color: #1cbbb4;
+  background-color: #00BCD4;
   color: #fff;
 }
 
@@ -3241,7 +3238,7 @@ scroll-view.cu-steps .cu-item {
 }
 
 .bg-cyan.light {
-  color: #1cbbb4;
+  color: #00BCD4;
   background: #d2f1f0;
 }
 
@@ -3522,7 +3519,7 @@ scroll-view.cu-steps .cu-item {
 }
 
 .text-cyan, .line-cyan, .lines-cyan {
-  color: #1cbbb4;
+  color: #00BCD4;
 }
 
 .text-blue, .line-blue, .lines-blue {
@@ -3559,4 +3556,21 @@ scroll-view.cu-steps .cu-item {
 
 .text-white, .line-white, .lines-white {
   color: #fff;
+}
+.cu-form-group textarea, .cu-form-group textarea textarea {
+  margin: 32rpx 0 30rpx;
+  height: 4.8em;
+  width: 100%;
+  line-height: 1.2em;
+  flex: 1;
+  font-size: 28rpx;
+  padding: 0;
+  box-sizing: content-box;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.cu-form-group textarea::after {
+  content: "测试文字";
+  opacity: 0;
 }

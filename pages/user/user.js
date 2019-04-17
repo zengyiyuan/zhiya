@@ -1,3 +1,4 @@
+const {host,api} = require('../../config.js')
 const app = getApp()
 Page({
 
@@ -9,7 +10,7 @@ Page({
     userInfo:[],
     btn:false,
     nameInput:false,
-    nickName:'',
+    nickName:wx.getStorageSync('nickName'),
   },
   // 获取头像
   getAvatar(){
@@ -47,7 +48,7 @@ Page({
     }),
     console.log(JSON.stringify(this.data.userInfo.avatarUrl))
     wx.downloadFile({
-      url: ''+this.data.userInfo.avatarUrl,
+      url: ''+that.data.userInfo.avatarUrl,
       success: function (res) {
         console.log(res);
         wx.saveImageToPhotosAlbum({
@@ -80,16 +81,19 @@ Page({
     var that = this;
     
    wx.request({
-     url: 'https://wx.zhiyajob.com/updateCustomer.htm',
+     url: api+'updateCustomer.htm',
      data: { customerNickname: that.data.nickName},
      method:'post',
-     header:{'cookie':'customerId='+wx.getStorageSync('customerId')+'&JSESSIONID'+wx.getStorageSync('JESESSIONID')},
+     header: { 'content-type':'application/x-www-form-urlencoded','cookie': 'customerId=' + wx.getStorageSync('customerId') },
      success(res){
+       app.globalData.userInfo.nickName = that.data.nickName;
+       wx.setStorageSync("nickName", that.data.nickName);
        if(res.statusCode ==200){
          wx.showToast({
            title: '更新成功',
          })
        }
+       console.log(app.globalData.userInfo)
      }
    })
     this.setData({ nameInput: false })
@@ -159,7 +163,5 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  }
+  
 })

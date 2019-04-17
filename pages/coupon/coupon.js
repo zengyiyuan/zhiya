@@ -7,7 +7,9 @@ Page({
   data: {
     navlist: ['未使用', '已使用', '已过期'],
     tabCur: 0,
-    couponList:[]
+    coupon1:[],
+    coupon2:[],
+    coupon3:[]
   },
   tabSelect: function (e) {
     if (e.currentTarget) {
@@ -21,10 +23,22 @@ Page({
   getCouponList() {
     var that = this;
     wx.request({
-      url: 'https://openapi.zhiyajob.com:8443/openapi/queryMemberCouponList.json?filterType=&couponStatus='+that.data.tabCur+'&customerId=7',
+      url: 'https://openapi.zhiyajob.com:8443/openapi/queryMemberCouponList.json?filterType=&couponStatus='+that.data.tabCur+'&customerId='+wx.getStorageSync("customerId"),
       success(res) {
-        that.setData({ couponList: res.data.dataList })
+        if(that.data.tabCur==0){
+          that.setData({ coupon1: res.data.dataList })
+        }else if(that.data.tabCur==1){
+          that.setData({ coupon2: res.data.dataList })
+        }else {
+          that.setData({ coupon3: res.data.dataList })
+        }
+        
       }
+    })
+  },
+  goOrderDesc(e){
+    wx.navigateTo({
+      url: '/pages/orderDesc/orderDesc?orderId='+e.currentTarget.dataset.orderid,
     })
   },
   /**
@@ -76,10 +90,5 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
-  }
 })

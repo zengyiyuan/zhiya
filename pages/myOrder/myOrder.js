@@ -1,4 +1,4 @@
-// pages/myOrders/myOrders.js
+const {host,api} = require("../../config.js");
 const app = getApp()
 Page({
 
@@ -16,45 +16,49 @@ Page({
     tabCur: 0,
     status: ["待支付", "待观摩","已完成"]
   },
-  tabSelect: function (e) {
-    if (e.currentTarget) {
-      this.setData({ tabCur: e.currentTarget.dataset.id })
-      this.getOrdersClassify();
-      // this.getqdorder(e.currentTarget.dataset.id);
-    }else {
-      this.setData({tabCur:0})
-    }
+  // tabSelect: function (e) {
+  //   if (e.currentTarget) {
+  //     this.setData({ tabCur: e.currentTarget.dataset.id })
+  //     this.getOrdersClassify();
+  //   }else {
+  //     this.setData({tabCur:0})
+  //   }
 
-  },
+  // },
   // 取消订单
-  cancelInspect(e){
-    var that = this;
-    var inspectId = e.currentTarget.dataset.inspect;
-    wx.request({
-      url: host+'updateInterviewInspect.json',
-      method:'post',
-      data: { "inspectId": inspectId, "inspectStatus": "3" },
-      success(res){
-        if(res.msg==1){
-          that.getOrderList();
-        }
-      }
+  // cancelInspect(e){
+  //   var that = this;
+  //   var inspectId = e.currentTarget.dataset.inspect;
+  //   wx.request({
+  //     url: host+'updateInterviewInspect.json',
+  //     method:'post',
+  //     data: { "inspectId": inspectId, "inspectStatus": "3" },
+  //     success(res){
+  //       if(res.msg==1){
+  //         that.getOrderList();
+  //       }
+  //     }
+  //   })
+  // },
+  goOrderDesc(e){
+    wx.navigateTo({
+      url: '/pages/orderDesc/orderDesc?orderId='+e.currentTarget.dataset.orderid,
     })
   },
   // 去支付
-  goOrderPay(e){
-    var orderInfo
-     this.data.orderList.forEach(item=>{
-      if (item.inspectId == e.currentTarget.dataset.orderid){
-        orderInfo=item;
-        wx.navigateTo({
-          url: '/pages/orderPay/orderPay?orderId=' + JSON.stringify(item),
-        })
-      }
-    })
-    console.log(orderInfo)
+  // goOrderPay(e){
+  //   var orderInfo
+  //    this.data.orderList.forEach(item=>{
+  //     if (item.inspectId == e.currentTarget.dataset.orderid){
+  //       orderInfo=item;
+  //       wx.navigateTo({
+  //         url: '/pages/orderPay/orderPay?orderId=' + JSON.stringify(item),
+  //       })
+  //     }
+  //   })
+  //   console.log(orderInfo)
     
-  },
+  // },
   //订单数量标题小圆点，使高度=宽度
   roundNumber: function () {
     var that = this
@@ -107,7 +111,7 @@ Page({
   getOrderList(){
     var that = this;
     wx.request({
-      url: 'https://openapi.zhiyajob.com:8443/openapi//queryInterviewInspectList.json?customerId='+wx.getStorageSync('customerId'),
+      url: host+'queryInterviewInspectList.json?inspectStatus=1&customerId='+wx.getStorageSync('customerId'),
       success(res) {
         that.setData({orderList:res.data.dataList,list:res.data.dataList})
       }
@@ -120,10 +124,10 @@ Page({
   onLoad: function (options) {
     var that = this
     // console.log(options.index)
-    var classifyCur = Number(options.index) + 1
-    this.setData({ classifyCur: classifyCur })
+    // var classifyCur = Number(options.index) + 1
+    // this.setData({ classifyCur: classifyCur })
     //订单数量标题小圆点，使高度=宽度
-    this.roundNumber()
+    // this.roundNumber()
     this.getOrderList()
 
   },
@@ -139,10 +143,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var that = this
+    // var that = this
     //根据用户id调取其订单列表(全部、待付款、待发货、待收货)
     // this.getqdorder(0);
-    this.tabSelect(0);
+    // this.tabSelect(0);
   },
 
   /**
@@ -173,10 +177,4 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

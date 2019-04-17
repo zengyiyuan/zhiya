@@ -5,11 +5,10 @@ const app = getApp()
 Page({
   data: {
     barCur:-1,
-    flag: true,
+    flag:true,
     words: '',
     value: '',
-    hotwords: ['英语', '开发','UI','平面设计','视觉设计','华为','小米'],
-    swiper:['../../image/swiper1'],
+    swiper:[],
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -17,35 +16,31 @@ Page({
     videoList:[],
     pageSize:3
   },
-  changeCur(e){
-    this.setData({barCur:e.currentTarget.dataset.id})
-    console.log(this.data.barCur);
-    this.setData({flag:true})
-    this.setData({words:this.data.hotwords[this.data.barCur]})
+  changeFlag(e){
+    console.log(e.detail)
+    this.setData({flag:e.detail})
   },
-  onChange(e) {
-    // console.log('onChange', e)
-    this.setData({
-        value: e.detail.value,
+  goBanner(e){
+    wx.navigateTo({
+      url: '/pages/banner/banner?url='+e.currentTarget.dataset.url,
     })
   },
-  // 点击搜索框进入搜索页面
-  onFocus(e) {
-    console.log('onfocus')
-    this.setData({flag:false})
+  saveWords(e){
+    this.setData({words:e.detail})
   },
-  cancel(){
-    this.setData({words:'',flag: true})
+  goReservation(){
+    wx.switchTab({
+      url: '/pages/reservation/reservation',
+    })
   },
-  // 去搜索
-  gosearch(e){
-    console.log(this.data.value);
-    this.setData({words:this.data.value})
+  goVideo(){
+    wx.switchTab({
+      url: '/pages/video/video',
+    })
   },
   // 去面约详细页
   goOrderDesc(e){
     var orderId = e.currentTarget.dataset.id;
-    console.log(orderId)
     wx.navigateTo({
       url: '/pages/orderDesc/orderDesc?orderId='+orderId,
     })
@@ -65,7 +60,6 @@ Page({
     var that = this;
     wx.request({
       url: 'https://openapi.zhiyajob.com:8443/openapi/querySysBannerList.json?channelType=2&bannerType=4',
-      header: { "Cache-Control": "max-age=3600, must-revalidate"},
       success(res){
         console.log(res.data)
         that.setData({
@@ -88,7 +82,7 @@ Page({
   getVideoList(){
     var that = this;
     wx.request({
-      url: 'https://openapi.zhiyajob.com:8443/openapi/searchDiscoveryVedio.json',
+      url: 'https://openapi.zhiyajob.com:8443/openapi/searchDiscoveryVedio.json?pageSize=8',
       success(res){
         that.setData({videoList:res.data.dataList});
       }
@@ -101,6 +95,11 @@ Page({
     })
   },
   onLoad: function (options) {
+    var scene = decodeURIComponent(options.scene)
+    console.log("scene="+scene)
+    if(options.shareCustomerId){
+      wx.setStorageSync("shareCustomerId", options.shareCustomerId)
+    }
     this.getAbout();
     this.getVideoList();
     this.swiper();
@@ -135,6 +134,29 @@ Page({
         }
       })
     }
+  },
+  onShareAppMessage() {
+    // share();
+    var that = this;
+    var shareObj = {
+      title: "约面详情",
+      path: "/pages/index/index?shareCustomerId=" + wx.getStorageSync("customerId"),
+      success: function (res) {
+        // 转发成功之后的回调
+        if (res.errMsg == 'shareAppMessage:ok') {
+
+        }
+      },
+      fail: function () {
+
+        if (res.errMsg == 'shareAppMessage:fail cancel') {
+          // 用户取消转发
+        } else if (res.errMsg == 'shareAppMessage:fail') {
+        }
+      }
+    }
+
+    return shareObj
   },
   getUserInfo: function(e) {
     console.log(e)

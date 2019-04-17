@@ -1,4 +1,5 @@
 // pages/orderPay/orderPay.js
+const {host,api} = require('../../config.js')
 Page({
 
   /**
@@ -11,7 +12,8 @@ Page({
     inspectId: null,
     inspectPrice: 0,
     title: '',
-    keyWords: ''
+    keyWords: '',
+    count:0,
   },
   checkChange(e){
 
@@ -19,13 +21,11 @@ Page({
   goPay() {
     var that = this;
     if (!this.data.inspectId) {
+      console.log("shareId"+wx.getStorageSync("shareCustomerId"))
+      let shareCustomerId = wx.getStorageSync("shareCustomerId")?wx.getStorageSync("shareCustomerId"):'';
       wx.request({
-        url: 'https://openapi.zhiyajob.com:8443/openapi/addInterviewInspectForWeb.json',
-        data: {
-          orderId: this.data.orderId,
-          payType: 2,
-          customerId: wx.getStorageSync("customerId")
-        },
+        url: host + 'addInterviewInspectForWeb.json?orderId='+that.data.orderId+'&payType=2&customerId='+wx.getStorageSync("customerId"),
+        header:{"cookie": "shareCustomerId="+shareCustomerId},
         success(res) {
           console.log(res)
           var inspectId = res.data.inspectId;
@@ -73,10 +73,20 @@ Page({
         })
       },
       'fail': function(res) {
+        // var that = this;
         console.log(res.errMsg)
         wx.navigateTo({
-          url: '/pages/fail/fail?err=' + res.errMsg + '&orderId=' + this.data.orderId,
+          url: '/pages/fail/fail?err=' + res.errMsg + '&orderId=' + that.data.orderId,
         })
+      }
+    })
+  },
+  checkCoupon () { 
+    var that = this;
+    wx.request({
+      url: host+'queryMemberCouponList.json?filterType=1&couponStatus=0&customerId='+wx.getStorageSync("customerId"),
+      success(res){
+        that.setData({coupon:res.data.count})
       }
     })
   },
@@ -84,9 +94,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    
     var that = this;
     var item = JSON.parse(options.orderId);
+    this.checkCoupon();
     if (item.interviewOrder) {
       this.setData({
         pic: item.interviewOrder.orderImg,
@@ -153,10 +164,4 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  }
 })

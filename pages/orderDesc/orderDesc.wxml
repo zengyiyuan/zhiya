@@ -1,11 +1,12 @@
-<!--pages/orderDesc/orderDesc.wxml-->
+
 <!-- 视频框 -->
 <view class='fixed'>
-  <video wx:if="{{isbuy==1}}" src="{{orderDesc.resumeUrl}}" object-fit="contain" enable-play-gesture="true" controls poster="{orderDesc.orderImg}}" bindplay="getsrc"></video>
+  <video wx:if="{{isPlay}}" src="{{orderDesc.resumeUrl}}" object-fit="contain" enable-play-gesture="true" controls poster="{orderDesc.orderImg}}" bindplay="getsrc" fixed='true' autoplay></video>
 
-  <view wx:if="{{isbuy==0}}" class='mask'>
-    <image src="{{orderDesc.orderImg}}"></image>
-    <button bindtap="toOrderPay" class='cu-btn round lines-cyan text-cyan'>{{orderDesc.inspectPrice}}付费观摩</button>
+  <view wx:if="{{!isPlay}}" class='mask'>
+    <image lazy-load="true"src="{{orderDesc.orderImg}}"></image>
+    <button catchtap="toOrderPay" class='cu-btn round lines-cyan text-cyan' wx:if="{{isbuy==0}}">{{orderDesc.inspectPrice}}付费观摩</button>
+    <view catchtap='toPlay' class='play' wx:if="{{isbuy==1}}"><text class='icon icon-playfill text-white text-xxl'></text></view>
   </view>
   <!-- tab切换 -->
   <scroll-view scroll-x class="bg-white nav">
@@ -23,22 +24,22 @@
   <view class="cu-list grid col-3">
     <view class="cu-item ">
       <view class='avartar'>
-        <image class='lg cu-avatar avatar1' src="{{orderDesc.customerHeadPortrait}}"></image>
-        <image class='xl cu-avatar bgavatar' src="../../image/avatar1.png"></image>
+        <image lazy-load="true"class='lg cu-avatar avatar1' src="{{orderDesc.customerHeadPortrait}}"></image>
+        <image lazy-load="true"class='xl cu-avatar bgavatar' src="../../image/avatar1.png"></image>
       </view>
       <text>{{orderDesc.customerName}}</text>
       <text>{{orderDesc.university}}{{orderDesc.profession}}</text>
     </view>
     <view class="cu-item pk">
       <view>
-        <image class='cu-avatar lg' src="../../image/recipe.png"></image>
+        <image lazy-load="true"class='cu-avatar' src="../../image/recipe.png"></image>
       </view>
       <text>{{orderDesc.applicationPosition}}</text>
     </view>
     <view class="cu-item ">
       <view class='avartar'>
-        <image class='lg cu-avatar avatar1' src="{{orderDesc.interviewerHeadPortrait}}"></image>
-        <image class='xl cu-avatar bgavatar' src="../../image/avatar2.png"></image>
+        <image lazy-load="true"class='lg cu-avatar avatar1' src="{{orderDesc.interviewerHeadPortrait}}"></image>
+        <image lazy-load="true"class='xl cu-avatar bgavatar' src="../../image/avatar2.png"></image>
       </view>
 
       <text>{{orderDesc.interviewerName}}</text>
@@ -47,34 +48,36 @@
   </view>
   <!-- 面试简介 -->
   <view class='info'>
-    <view class='title'>{{orderDesc.title}}</view>
+    <view class='title'>{{orderDesc.title}} <text catchtap='changeshare' class='icon icon-share lg iconshare text-cyan'></text></view>
     <view class='content'>
       <view class='sTitle'>面试简介</view>
-      <view class='subcontent'>
+      
+      <text class='{{isMore?"icon icon-fold":"icon icon-unfold"}} text-xxl more' catchtap='showMore'></text>
+      <view class='{{isMore?"":"subcontent"}}'>
         {{orderDesc.detail}}
       </view>
     </view>
-    <view class='content' wx:if="{{!orderDesc.isOpen}}">
+
+    <!-- <view class='content' wx:if="{{!orderDesc.isOpen}}">
       <view class='sTitle'>面试评语</view>
       <view class='subcontent'>
         我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是我不是</view>
-    </view>
+    </view> -->
   </view>
   <!-- 相关面约 -->
   <view class="hot about">
     <view class="meeting-mode">
       <view class="title">
         <text>相关约面</text>
-        <text class="icon icon-right"></text>
       </view>
       <view class="meeting-container" id="interviewOrderVedioList">
         <view class="cu-card case {{isCard?'no-card':''}}">
           <view wx:for="{{orderList}}" wx:key="index" class="cu-item" data-id="{{item.orderId}}" bindtap="goOrderDesc">
             <view class='image'>
-              <image src="{{item.orderImg}}" mode="widthFix"></image>
-              <view class="cu-tag bg-yellow">福利</view>
+              <image lazy-load="true"src="{{item.orderImg}}" mode="widthFix"></image>
+              <!-- <view class="cu-tag bg-yellow">福利</view> -->
               <view class='cu-bar bg-shadeBottom'>
-                <text>{{item.inspectNum||0}}人观摩</text>
+                <text>{{item.inspectNum||0}}人观看</text>
               </view>
             </view>
             <view class="cu-list menu menu-avatar">
@@ -103,17 +106,12 @@
         <view class='text-gray text-content text-df'>
           {{item.evaluateContent}}
         </view>
-        <!-- <view class='bg-grey padding-sm radius margin-top-sm  text-sm' wx:if="{{index==1}}">
-          <view class="flex {{index!=0?'margin-top-sm':'' }}" wx:for="{{2}}" wx:key>
-            <view>我：</view>
-            <view class='flex-sub'>我家的铲屎官也不舔毛！</view>
-          </view>
-        </view> -->
+       
         <view class='margin-top-sm flex justify-between'>
-          <view class='text-gray text-df'>{{item.updateDate}}</view>
+          <view class='text-gray text-df'>{{item.createDate}}</view>
           <view>
-            <text class="icon-appreciate{{!isZan?'fill':''}} text-{{!isZan?'red':'gray'}}"></text>
-            <text class="icon-messagefill text-gray margin-left-sm" bandtap="comment"></text>
+            <!-- <text class="icon icon-appreciate{{!isZan?'fill':''}} text-{{!isZan?'red':'gray'}}"></text>
+            <text class="icon icon-messagefill text-gray margin-left-sm" bandtap="comment"></text> -->
           </view>
         </view>
       </view>
@@ -122,3 +120,45 @@
 </view>
 <!-- 底部评论bar -->
 <view class='bottom'>————优秀的人也是有底线的————</view>
+<view class="cu-bar bg-white search mybuttom" style='position:fixed; bottom:0;width: 750rpx;' wx:if="{{isbuy==1&!shareShow}}">
+    <view class="cu-form-group top round mytextarea" >
+    <view class='title icon icon-write text-xxl'></view>
+    <view class='overhidden'>
+    <textarea placeholder="说点什么吧" maxlength="-1" placeholder-class='placeholder' auto-height='true'  value='{{defaultValue}}' bindinput="setValue" bindfocus='changeFocus' class='{{isFocus?"focusInput":""}}' fixed='true' show-confirm-bar="false"></textarea>
+    </view>
+  </view>
+  <view class='text-xxl mystatu' wx:if="{{!isFocus}}">
+    <text class="icon icon-favor{{isFavor?'fill':''}} text-{{isFavor?'cyan':'gray'}}" catchtap='setFavor'></text>
+    <text class=" icon icon-appreciate{{isZan?'fill':''}} text-{{isZan?'cyan':'gray'}}" catchtap='setZan'></text>
+  </view>
+  <view class='text-xxl mystatu' wx:if="{{isFocus}}" catchtap='toComment'>
+    <image lazy-load="true"src="../../image/iconsend.png" ></image>
+  </view>
+
+</view>
+<view class="cu-bar bg-white search mybuttom" style='position:fixed; bottom:0;width: 750rpx;' wx:if="{{isbuy==1&!shareShow}}">
+    <view class="cu-form-group top round mytextarea" >
+    <view class='title icon icon-write text-xxl'></view>
+    <view class='overhidden'>
+    <textarea placeholder="说点什么吧" maxlength="-1" placeholder-class='placeholder' auto-height='true'  value='{{defaultValue}}' bindinput="setValue" bindfocus='changeFocus' class='{{isFocus?"focusInput":""}}' fixed='true' show-confirm-bar="false"></textarea>
+    </view>
+  </view>
+  <view class='text-xxl mystatu' wx:if="{{!isFocus}}">
+    <text class="icon icon-favor{{isFavor?'fill':''}} text-{{isFavor?'cyan':'gray'}}" catchtap='setFavor'></text>
+    <text class=" icon icon-appreciate{{isZan?'fill':''}} text-{{isZan?'cyan':'gray'}}" catchtap='setZan'></text>
+  </view>
+  <view class='text-xxl mystatu' wx:if="{{isFocus}}" catchtap='toComment'>
+    <image lazy-load="true"src="../../image/iconsend.png" ></image>
+  </view>
+
+</view>
+
+<view hidden="{{!shareShow}}">
+  <view class='shareMask' catchtouchmove='true' >
+    <view class='saveShare text-center text-blue bg-white text-xl'>
+      <view bindtap='previewImg'>保存图片分享至朋友圈</view>
+      <view catchtap='hideshare'>取消</view>
+    </view>
+  </view>
+  <canvas canvas-id='share' disable-scroll="false" bindtouchmove="true" style='width:{{screenWidth}}px;height:{{screenHeight}}px'></canvas>
+</view>

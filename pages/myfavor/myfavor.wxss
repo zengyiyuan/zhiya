@@ -1,6 +1,6 @@
 page {
   height: 100%;
-  background-color: #f8f8f8;
+  background-color: #fffff8;
 }
 .line-home {
   background-color: #fff;
@@ -38,22 +38,29 @@ page {
   padding:0 20rpx;
 }
 
-
+/* 热门视频 */
 .hot {
   margin-top: 100rpx;
   background-color: #fff;
 }
-
-.hot .title {
+.face {
+  margin-top: 100rpx;
+  /* margin-top: 18rpx; */
+  background-color: #fff;
+}
+.hot .title,
+.face .title {
     padding: 30rpx;
     position: relative;
 }
-.hot .title text {
+.hot .title text,
+.face .title text {
     font-size: 18px;
     color: #333;
     font-weight: 700;
 }
-.hot .title .icon {
+.hot .title .icon,
+.face .title .icon {
     position: absolute;
     right: 30rpx;
     color: #ddd;
@@ -74,30 +81,31 @@ word-wrap:normal;
 text-overflow:ellipsis;
 white-space:nowrap;
 }
-.hot .image .cu-bar text {
+.hot .image .cu-bar text,
+.face .image .cu-bar text {
   position:absolute;
   bottom:10rpx;
   right: 20rpx;
   text-align: right;
 }
-.hot .cu-list.menu-avatar>.cu-item {
+.hot .cu-list.menu-avatar>.cu-item,
+.face .cu-list.menu-avatar>.cu-item {
 padding-left:0rpx;
 height:110rpx;
 color: #000;
 }
-.hot .text-grey, .line-grey, .lines-grey {
-  color:#000;
 
-}
-
-.hot .text-gray, .line-gray, .lines-gray {
-color:#8799a3;
-}
 .hot .image {
   border-radius: 20rpx;
   overflow: hidden;
+  height: 360rpx;
 }
-.hot .cu-card>.cu-item {
+.hot image {
+  height: 360rpx!important;
+  border-radius:20rpx; 
+}
+.hot .cu-card>.cu-item,
+.face .cu-card>.cu-item {
   margin: 0rpx 30rpx;
   border-radius: 10rpx;
 
@@ -116,6 +124,24 @@ color:#8799a3;
 }
 .face {
   margin-bottom:160rpx; 
+}
+.face .image {
+  height: 194rpx;
+  border-radius: 26rpx;
+  overflow: hidden; 
+}
+.face image {
+  height: 194rpx;
+}
+.facetitle ,
+.facewriter {
+   overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  white-space:nowrap;
+  /* height: 500rpx; */
 }
 .bottom {
   text-align: center;

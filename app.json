@@ -1,7 +1,6 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/search/search",
     "pages/video/video",
     "pages/orderDesc/orderDesc",
     "pages/authorize/authorize",
@@ -14,7 +13,9 @@
     "pages/fail/fail",
     "pages/user/user",
     "pages/videoDesc/videoDesc",
-    "pages/coupon/coupon"
+    "pages/coupon/coupon",
+    "pages/banner/banner"
+  
   ],
   "window": {
     "backgroundTextStyle": "light",

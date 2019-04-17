@@ -20,13 +20,27 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     orderList: [],
-    pageSize: 3,
+    beginNum:0,
+    pageSize: 8,
     content: [],
     city: [],
     videoList: [],
     shownavindex: '',
-    cateId:null,
-    sortType:null,
+    cateId:'',
+    sortType:'',
+  },
+  goBanner(e) {
+    wx.navigateTo({
+      url: '/pages/banner/banner?url=' + e.currentTarget.dataset.url,
+    })
+  },
+  changeFlag(e) {
+    // console.log(e.detail)
+    this.setData({ flag: e.detail })
+  },
+  saveWords(e) {
+    this.setData({ words: e.detail })
+    this.getVideoList();
   },
   changeShow() {
     this.setData({ show: false })
@@ -42,6 +56,7 @@ Page({
   selectEmpty() {
     this.setData({ selectCur: 0 })
   },
+  // 更多筛选
   selectconfirm() {
     var that = this;
     console.log(this.data.select[this.data.selectCur])
@@ -49,49 +64,32 @@ Page({
     wx.request({
       url: host + 'searchDiscoveryVedio.json?beginNum=0&pageSize=8&sortType='+ '&keyWords=' + that.data.words + '&cateId=' + that.data.cateId,
       success(res) {
-        that.setData({ videoList: res.data.dataList })
+        that.setData({ videoList: res.data.dataList ,beginNum:0})
       }
     })
   },
   changeCur(e) {
     this.setData({ barCur: e.currentTarget.dataset.id })
-    console.log(this.data.barCur);
+    // console.log(this.data.barCur);
     this.setData({ flag: true })
     this.setData({ words: this.data.hotwords[this.data.barCur] })
   },
   selectCur(e) {
     this.setData({ selectCur: e.currentTarget.dataset.id,cateId:e.currentTarget.dataset.id+1 })
-    console.log(this.data.selectCur);
+    // console.log(this.data.selectCur);
 
   },
+  // 获取排序
   getsort(e){
     var that =this;
-    this.setData({sortsCur:e.currentTarget.dataset.sort});
-    console.log(this.data.sortsCur);
+    this.setData({sortsCur:e.currentTarget.dataset.sort,show:false});
+    // console.log(this.data.sortsCur);
     wx.request({
       url: host + 'searchDiscoveryVedio.json?beginNum=0&pageSize=8&sortType=' + that.data.sortsCur + '&keyWords=' + that.data.words + '&cateId=',
       success(res) {
-        that.setData({ videoList: res.data.dataList })
+        that.setData({ videoList: res.data.dataList,beginNum:0})
       }
     })
-  },
-  onChange(e) {
-    // console.log('onChange', e)
-    this.setData({
-      value: e.detail.value,
-    })
-  },
-  // 点击搜索框进入搜索页面
-  onFocus(e) {
-    console.log('onfocus')
-    this.setData({ flag: false })
-  },
-  cancel() {
-    this.setData({ words: '', flag: true })
-  },
-  gosearch(e) {
-    console.log(this.data.value);
-    this.setData({ words: this.data.value })
   },
   goVideoDesc(e) {
     var videoId = e.currentTarget.dataset.videoid;
@@ -107,24 +105,25 @@ Page({
     wx.request({
       url: 'https://openapi.zhiyajob.com:8443/openapi/querySysBannerList.json?channelType=2&bannerType=4',
       success(res) {
-        console.log(res.data)
+        // console.log(res.data)
         that.setData({
           swiper: res.data
         })
       }
     })
   },
+  // 获取视频列表
   getVideoList() {
     var that = this;
     wx.request({
-      url: 'https://openapi.zhiyajob.com:8443/openapi/searchDiscoveryVedio.json',
+      url: host+'searchDiscoveryVedio.json?beginNum='+that.data.beginNum+'&pageSize='+that.data.pageSize+'&sortType='+that.data.sortsCur+'&keyWords='+that.data.words+'&cateId='+that.data.cateId,
       success(res) {
-        that.setData({ videoList: res.data.dataList });
+        that.setData({ videoList: that.data.videoList.concat(res.data.dataList) });
       }
     })
   },
   bindtap(e) {
-    console.log(e.detail)
+    // console.log(e.detail)
   },
   showCity() {
     this.setData({ tabCur: 0, show: !this.data.show, shownavindex: 1 })
@@ -147,8 +146,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if(options.shareCustomerId){
+      wx.setStorageSync("shareCustomerId", options.shareCustomerId)
+    }
     this.getVideoList();
     this.getSelect();
+    this.swiper();
     if (options) {
       console.log(options)
       var words = options.keywords;
@@ -196,7 +199,7 @@ Page({
    */
   onReachBottom: function () {
     console.log('到页面底部了')
-    this.data.pageSize++;
+    this.setData({beginNum:this.data.beginNum+this.data.pageSize})
     this.getVideoList();
 
   },
@@ -204,8 +207,28 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage() {
+    // share();
+    var that = this;
+    var shareObj = {
+      title: "约面详情",
+      path: "/pages/video/video?shareCustomerId=" + wx.getStorageSync("customerId"),
+      success: function (res) {
+        // 转发成功之后的回调
+        if (res.errMsg == 'shareAppMessage:ok') {
 
+        }
+      },
+      fail: function () {
+
+        if (res.errMsg == 'shareAppMessage:fail cancel') {
+          // 用户取消转发
+        } else if (res.errMsg == 'shareAppMessage:fail') {
+        }
+      }
+    }
+
+    return shareObj
   },
 
 })

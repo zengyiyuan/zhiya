@@ -11,6 +11,7 @@ Page({
     classifyCur: 0,
     navlist: ['约面', '视频'],
     orderList: [],
+    videoList:[],
     list: [],
     tabCur: 0,
     status: ["待支付", "待观摩", "已完成"],
@@ -26,6 +27,22 @@ Page({
     }
 
   },
+  goOrderDesc(e) {
+    var orderId = e.currentTarget.dataset.id;
+    console.log(orderId)
+    wx.navigateTo({
+      url: '/pages/orderDesc/orderDesc?orderId=' + orderId,
+    })
+  },
+  goVideoDesc(e) {
+    var videoId = e.currentTarget.dataset.videoId;
+    var index = e.currentTarget.dataset.index;
+    var item = this.data.videoList[index]
+
+    wx.navigateTo({
+      url: '/pages/videoDesc/videoDesc?item=' + JSON.stringify(item),
+    })
+  },
   getAbout() {
     var that = this;
     wx.request({
@@ -35,12 +52,21 @@ Page({
       }
     })
   },
-
+  getVideoList() {
+    var that = this;
+    wx.request({
+      url: 'https://openapi.zhiyajob.com:8443/openapi/searchDiscoveryVedio.json',
+      success(res) {
+        that.setData({ videoList: res.data.dataList });
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.getAbout();
+    this.getVideoList();
   },
 
   /**
@@ -84,11 +110,4 @@ Page({
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

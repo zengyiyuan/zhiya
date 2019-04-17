@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo:[]
+    userInfo:[],
+    nickName:wx.getStorageSync('nickName')
 
   },
   getUserInfo(){
@@ -85,10 +86,5 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
-  }
 })

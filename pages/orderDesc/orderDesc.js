@@ -1,11 +1,12 @@
 const {api,host} = require("../../config.js");
-
+// const share = require("../../utils/share.js")
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    shareShow:false,
     src:'',
     pic:'',
     tab:['详情','评论'],
@@ -14,6 +15,7 @@ Page({
     orderId:0,
     orderList:[],
     isbuy:0,
+    isPlay:false,
     orderDesc:{},
     pageVideoSize:3,
     pageCommentSize: 3,
@@ -21,6 +23,9 @@ Page({
     isZan:false,
     defaultValue:'',
     commentList:[],
+    isMore:false,
+    screenHeight: 300,
+    screenWidth: 450
   },
   tabSelect(e) {
     console.log(e);
@@ -29,10 +34,65 @@ Page({
       scrollLeft: (e.currentTarget.dataset.id-1)*60
     })
   },
+  changeshare() {
+    this.setData({ shareShow: true })
+    this.doCanvas();
+  },
+  previewImg() {
+    var that = this;
+    console.log(111)
+    wx.canvasToTempFilePath({
+      canvasId: 'share',
+      success: function (res) {
+        var tempFilePath = res.tempFilePath;
+        console.log(tempFilePath);
+        wx.saveImageToPhotosAlbum({
+          filePath: tempFilePath,
+          success: function (res) {
+            wx.showToast({
+              title: '保存成功',
+
+            })
+            that.setData({ shareShow: false })
+          }
+        })
+      },
+      fail: function (res) {
+        console.log(res);
+      }
+    });
+
+  },
+  hideshare() {
+    this.setData({ shareShow: false })
+  },
+  doCanvas() {
+    var that = this;
+
+
+    const pic = wx.createCanvasContext("share", this);
+
+    pic.setFillStyle("#fff");
+    pic.fillRect(0, 0, that.data.screenWidth, that.data.screenHeight);
+    pic.setFontSize(18);
+    pic.setFillStyle("#000");
+    pic.fillText('' + wx.getStorageSync("orderInfo").title, 20, that.data.screenHeight - 210);
+    pic.drawImage('../../image/erweima.jpg', that.data.screenWidth * 0.5 - 65, that.data.screenHeight - 159, 129, 129)
+    pic.setFillStyle("#999");
+    pic.fillText('' + wx.getStorageSync("orderInfo").keywords, 20, that.data.screenHeight - 180);
+    pic.draw();
+    console.log(that.data.orderDesc.orderImg)
+  },
+  showMore(){
+    this.setData({isMore:!this.data.isMore})
+  },
   // 获取视频地址
   getsrc(){
     // console.log(111)
     this.setData({ src:'../../video/video/59b6bb1098e51.mp4'})
+  },
+  toPlay(){
+    this.setData({isPlay:true})
   },
   // 去订单支付页
   toOrderPay(){
@@ -43,26 +103,31 @@ Page({
     })
   },
   // 评论
-  toComment(e){
+  setValue(e) {
+    this.setData({ defaultValue: e.detail.value })
+  },
+  // 评论
+  toComment() {
     var that = this;
-    var value = e.detail.value;
-    console.log(value);
+    console.log(this.data.defaultValue);
     wx.request({
-      url: api +'addWxInterviewOrderEvaluate.json',
-      method:'post',
-      data: {"parentId":0,"orderId": that.data.orderId, "evaluateContent": value},
-      header:{"cookie":"customerId="+wx.getStorageSync("customerId")},
-      success(res){
+      url: api + 'addWxInterviewOrderEvaluate.json"',
+      method: 'post',
+      data: { "parentId": 0, "orderId": that.data.orderId, "evaluateContent": that.data.defaultValue },
+      header: { 'content-type': 'application/x-www-form-urlencoded', "cookie": "customerId=" + wx.getStorageSync("customerId") },
+      success(res) {
         console.log(res)
-        that.setData({ defaultValue: '' });
+        var newArr = that.data.commentList;
+        newArr.unshift(res.data.evaluate)
+        that.setData({ defaultValue: '', commentList: newArr });
         wx.showToast({
           title: '评论成功',
-        
+
         })
       }
     })
-   
-  
+
+
   },
   // 获取相关面约
   getAbout(){
@@ -90,8 +155,8 @@ Page({
       wx.request({
         url: api +'cancelCustomerCollect.json',
         method: 'post',
-        data: { dataId: this.data.orderId, type: "2" },
-        header: { "cookie": 'customerId=' + wx.getStorageSync('customerId') },
+        data: { dataId: this.data.orderId, type: "1" },
+        header: { "content-type":"application/x-www-form-urlencoded", "cookie": 'customerId=' + wx.getStorageSync('customerId') },
         success(res) {
           console.log(res);
           if (res.errMsg == "request:ok") {
@@ -104,8 +169,8 @@ Page({
       wx.request({
         url: api + 'addCustomerCollect.json',
         method: 'post',
-        data: { dataId: this.data.orderId, type: "2" },
-        header: { "cookie": 'customerId=' + wx.getStorageSync('customerId') },
+        data: { dataId: this.data.orderId, type: "1" },
+        header: { "content-type": "application/x-www-form-urlencoded", "cookie": 'customerId=' + wx.getStorageSync('customerId') },
         success(res) {
           console.log(res);
           if (res.errMsg == "request:ok") {
@@ -124,7 +189,7 @@ Page({
         url: api + 'cancelCustomerPraise.json',
         method: 'post',
         data: { dataId: this.data.orderId, type: "1" },
-        header: { "cookie": 'customerId=' + wx.getStorageSync('customerId') },
+        header: { "content-type": "application/x-www-form-urlencoded", "cookie": 'customerId=' + wx.getStorageSync('customerId') },
         success(res) {
           console.log(res);
           if (res.errMsg == "request:ok") {
@@ -137,7 +202,7 @@ Page({
         url: api + 'addCustomerPraise.json',
         method: 'post',
         data: { dataId: this.data.orderId, type: "1" },
-        header: { "cookie": 'customerId=' + wx.getStorageSync('customerId') },
+        header: { "content-type": "application/x-www-form-urlencoded","cookie": 'customerId=' + wx.getStorageSync('customerId') },
         success(res) {
           console.log(res);
           if (res.errMsg == "request:ok") {
@@ -158,47 +223,79 @@ Page({
       }
     })
   },
+  changeFocus() {
+    this.setData({ isFocus: true })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log("shareId=" + options.shareCustomerId)
+    if (options.shareCustomerId) {
+      wx.setStorageSync("shareCustomerId", options.shareCustomerId)
+    }
     var that = this;
     var orderId = options.orderId;
-    this.setData({pic:'../../image/banner'+orderId+'.png',orderId:orderId});
+    this.setData({ orderId: orderId });
     wx.request({
-      url: 'https://openapi.zhiyajob.com:8443/openapi/getInterviewOrder.json?interviewOrderId='+orderId+'',
-      success(res){
-        that.setData({orderDesc:res.data})
+      url: 'https://openapi.zhiyajob.com:8443/openapi/getInterviewOrder.json?interviewOrderId=' + orderId + '',
+      success(res) {
+        that.setData({ orderDesc: res.data })
+        let orderInfo = {
+          orderImg: res.data.orderImg,
+          title: res.data.title,
+          keywords: res.data.keyWords
+        }
+        wx.setStorageSync("orderInfo", orderInfo)
         console.log(that.data.orderDesc)
       }
     })
     wx.request({
       url: 'https://openapi.zhiyajob.com:8443/openapi/checkCustomerIsInspect.json',
-      data:{
-        orderId:this.data.orderId,
-        customerId:wx.getStorageSync('customerId') 
+      data: {
+        orderId: this.data.orderId,
+        customerId: wx.getStorageSync('customerId')
       },
-      success(res){
-        console.log('查看用户是否买过面约'+res.data)
-        that.setData({isbuy:res.data})
+      success(res) {
+        console.log(res)
+        console.log('查看用户是否买过面约' + res.data)
+        that.setData({ isbuy: res.data })
       }
     })
-    
+
     wx.request({
-      url: api +'getCustomerCollectAndPraise.json?dataId='+that.data.orderId+'&type=1',
-      success(res){
+      url: api + 'getCustomerCollectAndPraise.json?dataId=' + that.data.orderId + '&type=1',
+      success(res) {
         console.log(res)
-        if(res.data.praiseFlag==1){
-          that.setData({isFavor:true});  
+        if (res.data.praiseFlag == 1) {
+          that.setData({ isFavor: true });
         }
-        if(res.data.collectFlag==1){
-          that.setData({isZan:true})
+        if (res.data.collectFlag == 1) {
+          that.setData({ isZan: true })
         }
       }
     })
     this.getAbout();
     this.getComment();
-    
+    wx.getImageInfo({
+      "src": "../../image/erweima.jpg",
+      success: function (res) {
+        console.log(res)
+
+        wx.setStorageSync("imgUrl", res.path);
+      },
+      fail: function (res) {
+        console.log("fail" + res.errMsg)
+      }
+    }),
+      wx.getSystemInfo({
+        success: function (res) {
+          that.setData({
+            screenWidth: res.screenWidth * 0.8,
+            screenHeight: res.screenHeight * 0.6
+          })
+        },
+      })
   },
 
   /**
@@ -206,6 +303,7 @@ Page({
    */
   onReady: function () {
     this.getsrc();
+    this.doCanvas();
   },
 
   /**
@@ -258,7 +356,27 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage() {
+    // share();
+    var that = this;
+    var shareObj = {
+      title: "约面详情",
+      path:  "/pages/orderDesc/orderDesc?shareCustomerId=" + wx.getStorageSync("customerId") + "&orderId=" + that.data.orderId,
+      success: function (res) {
+        // 转发成功之后的回调
+        if (res.errMsg == 'shareAppMessage:ok') {
 
-  }
+        }
+      },
+      fail: function () {
+
+        if (res.errMsg == 'shareAppMessage:fail cancel') {
+          // 用户取消转发
+        } else if (res.errMsg == 'shareAppMessage:fail') {
+        }
+      }
+    }
+
+    return shareObj
+  },
 })

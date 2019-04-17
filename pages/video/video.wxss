@@ -12,18 +12,35 @@ page {
   z-index: 1;
   width: 100%;
 }
+.myswiper {
+  margin-top: 120rpx;
+  /* margin-bottom: 20rpx; */
+  height: 240rpx;
+  overflow: hidden;
+}
+.myswiper image {
+  width: 100%;
+  height: 240rpx!important;
+}
+.myswiper swiper {
+  height: 240rpx;
+}
+
 .mysearch {
   background-color: #fff;
   width: 100%;
   height: 76rpx;
   top: 0;
-  /* position: relative; */
-  /* text-align: center; */
-  padding: 60rpx 32rpx;
+  padding: 60rpx 0rpx;
   position: fixed;
   z-index: 9999; 
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
  
+}
+.myform {
+  align-content: center;
 }
 .mysearch input {
   background-color: #f4f4f4;
@@ -60,19 +77,13 @@ page {
 .mysearch .search-form input {
   width: 100%;
   padding-left:20rpx;
+  font-size: 30rpx;
   box-sizing: border-box; 
   /* text-align: center; */
 }
 .mysearch .searchwords {
   font-size: 30rpx;
 }
-.myswiper {
-  margin-top: 120rpx;
-  /* margin-bottom: 20rpx; */
-  height: 240rpx;
-  overflow: hidden;
-}
-
 /* 热门搜索 */
 .searchDetail {
   padding: 120rpx 30rpx;
@@ -85,11 +96,15 @@ page {
   padding: 0 30rpx;
 }
 .bar {
-  border-radius: 35rpx;
+  border-radius: 4px;
   text-align: center;
-  padding: 12rpx 45rpx;
-  margin: 13rpx 4rpx;
-  background-color: #F5F5F5;
+  /* padding: 12rpx 45rpx; */
+  width: 28.2%;
+  height: 60rpx;
+  line-height: 60rpx;
+  margin-top: 20rpx;
+  margin-right: 4%;
+  border: 2rpx solid #E1E1E1;
 }
 .current {
   background-color: #00BCD4;
@@ -294,7 +309,7 @@ page {
   background-color: #fff;
 }
 .face {
-  margin-top: 18rpx;
+ padding-top: 28rpx;
 }
 .hot .title {
     padding: 30rpx;
@@ -374,12 +389,14 @@ color:#8799a3;
   color: #00BCD4;
   border-top: 1rpx solid #efefef;
   border-bottom: 1rpx solid #efefef;
+  border-radius: 0;
 }
 
 .btn-submit {
   flex: 1;
   background-color: #00BCD4;
   color: #fff;
+  border-radius: 0;
 }
 .face .cu-card.case {
   margin: 0 30rpx;
@@ -397,10 +414,10 @@ color:#8799a3;
   margin-bottom:160rpx; 
 }
 .face .image {
-  height: 240rpx;
+  height: 194rpx;
 }
 .face image {
-  height: 240rpx;
+  height: 194rpx;
 }
 .facetitle ,
 .facewriter {

@@ -2,6 +2,20 @@ page {
   height: 100%;
   background-color: #f8f8f8;
 }
+.myswiper {
+  margin-top: 120rpx;
+  /* margin-bottom: 20rpx; */
+  height: 240rpx;
+  overflow: hidden;
+}
+.myswiper image {
+  width: 100%;
+  height: 240rpx!important;
+}
+.myswiper swiper {
+  height: 240rpx;
+}
+
 .mask {
   height: 100%;
   opacity: 0.5;
@@ -11,68 +25,6 @@ page {
   z-index: 1;
   width: 100%;
 }
-.mysearch {
-  background-color: #fff;
-  width: 100%;
-  height: 76rpx;
-  top: 0;
-  /* position: relative; */
-  /* text-align: center; */
-  padding: 60rpx 32rpx;
-  position: fixed;
-  z-index: 9999; 
-  box-sizing: border-box;
- 
-}
-.mysearch input {
-  background-color: #f4f4f4;
-  /* height: 1.6rem; */
-  border-radius: 20rpx;
-
-}
-.mysearch .cu-bar {
-  padding-left: 20rpx;
-}
-.mysearch .action {
-  margin: 0;
-}
-.mysearch .cu-btn {
-  background-color: #fff;
-  padding: 0;
-  font-size: 30rpx; 
-}
-.mysearch .search-form {
-  position: relative;
-  justify-content: center;
-}
-.mysearch .search {
-  position: absolute;
-  top: 0;
-  left: 0rpx;
-  width: 100%;
-}
-.mysearch .search .icon-search {
-  position: absolute;
-  top: 0;
-  right: 10rpx;
-}
-.mysearch .search-form input {
-  width: 100%;
-  padding-left:20rpx;
-  box-sizing: border-box; 
-  /* text-align: center; */
-}
-.mysearch .searchwords {
-  font-size: 30rpx;
-}
-.myswiper {
-  margin-top: 120rpx;
-  /* margin-bottom: 20rpx; */
-  height: 240rpx;
-  overflow: hidden;
-}
-
-/* 热门搜索 */
 .searchDetail {
   padding: 120rpx 30rpx;
   /* margin-top: 160rpx; */
@@ -81,7 +33,6 @@ page {
 .box {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 30rpx;
 }
 .bar {
   border-radius: 35rpx;
@@ -90,7 +41,7 @@ page {
   margin: 13rpx 4rpx;
   background-color: #F5F5F5;
 }
-.searchDetail .current {
+.box .current {
   background-color: #00BCD4;
   color: #fff;
 }
@@ -106,9 +57,13 @@ page {
 }
 .myhot,
 .history {
-  padding: 0 30rpx;
   font-size: 36rpx;
   margin: 10rpx;
+}
+.icon-search {
+  width: 64rpx;
+  height: 64rpx;
+  z-index: 7;
 }
 
 /* 级联 */
@@ -125,10 +80,13 @@ page {
   background: #fff;
   overflow: hidden;
 }
+.mycontent {
+  margin-top: 120rpx;
+}
 
 .nav {
   position: relative;
-  z-index: 99;
+  z-index: 5;
   display: flex;
   border-bottom: 1rpx solid #f4f4f4;
   background: #fff;
@@ -279,6 +237,7 @@ page {
 .myselect {
   height: 450rpx;
   padding: 50rpx 0;
+  background-color: #f9f9f9;
 }
 
 .quyu .qy {
@@ -345,6 +304,7 @@ button::after {
 .wrapper {
   position: fixed;
   top: 82rpx;
+  width: 100%;
   background-color: #fff;
   height: 868rpx;
   z-index: 9999;
@@ -354,6 +314,7 @@ button::after {
 .hot {
   /* margin-top: 120rpx; */
   background-color: #fff;
+  padding-top: 30rpx;
 }
 .face {
   margin-top: 18rpx;
@@ -372,6 +333,14 @@ button::after {
     right: 30rpx;
     color: #ddd;
     margin-top: 10rpx;
+}
+.hot .image {
+  border-radius: 20rpx;
+  overflow: hidden;
+  height: 360rpx;
+}
+.hot image {
+  height: 360rpx!important;
 }
 .cu-card.case .image .cu-tag {
 position:absolute;
@@ -407,10 +376,7 @@ color: #000;
 .hot .text-gray, .line-gray, .lines-gray {
 color:#8799a3;
 }
-.hot .image {
-  border-radius: 20rpx;
-  overflow: hidden;
-}
+
 .hot .cu-card>.cu-item {
   margin: 0rpx 30rpx;
   border-radius: 10rpx;
@@ -436,10 +402,20 @@ color:#8799a3;
   color: #00BCD4;
   border-top: 1rpx solid #efefef;
   border-bottom: 1rpx solid #efefef;
+  border-radius: 0;
 }
 
 .btn-submit {
   flex: 1;
   background-color: #00BCD4;
   color: #fff;
+  border-radius: 0;
+}
+.sort {
+  font-size: 32rpx;
+  padding: 20rpx 30rpx;
+}
+.sort.current {
+  color: #00BCD4;
+  background: #fff;
 }

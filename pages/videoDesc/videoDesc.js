@@ -8,13 +8,14 @@ Page({
   data: {
     src: '',
     pic: '',
+    isFocus:false,
     tab: ['详情', '评论'],
     TabCur: 0,
     scrollLeft: 0,
     orderId: 0,
-    banner: ['../../image/banner1', '../../image/banner2', '../../image/banner3'],
     orderList: [],
     isbuy: false,
+    isPlay:false,
     orderDesc: {},
     pageVideoSize: 3,
     pageCommentSize: 3,
@@ -31,10 +32,16 @@ Page({
       scrollLeft: (e.currentTarget.dataset.id - 1) * 60
     })
   },
+  changeFocus(){
+    this.setData({isFocus:true})
+  },
   // 获取视频地址
   getsrc() {
     // console.log(111)
     this.setData({ src: '../../video/video/59b6bb1098e51.mp4' })
+  },
+  toPlay() {
+    this.setData({ isPlay: true })
   },
   // 去订单支付页
   toOrderPay() {
@@ -44,19 +51,23 @@ Page({
       url: '/pages/orderPay/orderPay?orderId=' + orderId + '',
     })
   },
+  setValue(e){
+    this.setData({defaultValue:e.detail.value})
+  },
   // 评论
-  toComment(e) {
+  toComment() {
     var that = this;
-    var value = e.detail.value;
-    console.log(value);
+    console.log(this.data.defaultValue);
     wx.request({
       url: api + 'addWxDiscoveryEvaluate.json',
       method: 'post',
-      data: { "parentId": 0, "vedioId": that.data.orderId, "evaluateContent": value },
-      header: { "cookie": "customerId=" + wx.getStorageSync("customerId") },
+      data: { "parentId": 0, "vedioId": that.data.orderId, "evaluateContent": that.data.defaultValue },
+      header: { 'content-type': 'application/x-www-form-urlencoded' ,"cookie": "customerId=" + wx.getStorageSync("customerId") },
       success(res) {
         console.log(res)
-        that.setData({ defaultValue: '' });
+        var newArr = that.data.commentList;
+        newArr.unshift(res.data.evaluate)
+        that.setData({ defaultValue: '', commentList: newArr });
         wx.showToast({
           title: '评论成功',
 
@@ -76,14 +87,6 @@ Page({
       }
     })
   },
-  // 去相关面约商品详情
-  goOrderDesc(e) {
-    var orderId = e.currentTarget.dataset.id;
-    console.log(orderId)
-    wx.navigateTo({
-      url: '/pages/orderDesc/orderDesc?orderId=' + orderId,
-    })
-  },
   // 设置收藏
   setFavor() {
     var that = this;
@@ -93,7 +96,7 @@ Page({
         url: api + 'cancelCustomerCollect.json',
         method: 'post',
         data: { dataId: this.data.orderId, type: "2" },
-        header: { "cookie": 'customerId=' + wx.getStorageSync('customerId') },
+        header: { "content-type": "application/x-www-form-urlencoded","cookie": 'customerId=' + wx.getStorageSync('customerId') },
         success(res) {
           console.log(res);
           if (res.errMsg == "request:ok") {
@@ -107,7 +110,7 @@ Page({
         url: api + 'addCustomerCollect.json',
         method: 'post',
         data: { dataId: this.data.orderId, type: "2" },
-        header: { "cookie": 'customerId=' + wx.getStorageSync('customerId') },
+        header: { "content-type": "application/x-www-form-urlencoded","cookie": 'customerId=' + wx.getStorageSync('customerId') },
         success(res) {
           console.log(res);
           if (res.errMsg == "request:ok") {
@@ -126,7 +129,7 @@ Page({
         url: api + 'cancelCustomerPraise.json',
         method: 'post',
         data: { dataId: this.data.orderId, type: "2" },
-        header: { "cookie": 'customerId=' + wx.getStorageSync('customerId') },
+        header: { "content-type": "application/x-www-form-urlencoded", "cookie": 'customerId=' + wx.getStorageSync('customerId') },
         success(res) {
           console.log(res);
           if (res.errMsg == "request:ok") {
@@ -139,7 +142,7 @@ Page({
         url: api + 'addCustomerPraise.json',
         method: 'post',
         data: { dataId: this.data.orderId, type: "2" },
-        header: { "cookie": 'customerId=' + wx.getStorageSync('customerId') },
+        header: { "content-type": "application/x-www-form-urlencoded","cookie": 'customerId=' + wx.getStorageSync('customerId') },
         success(res) {
           console.log(res);
           if (res.errMsg == "request:ok") {
@@ -270,7 +273,27 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage() {
+  //   // share();
+  //   var that = this;
+  //   var shareObj = {
+  //     title: "约面详情",
+  //     path: "/pages/videoDesc/videoDesc?shareCustomerId=" + wx.getStorageSync("customerId") + "&orderId=" + that.data.orderId,
+  //     success: function (res) {
+  //       // 转发成功之后的回调
+  //       if (res.errMsg == 'shareAppMessage:ok') {
 
-  }
+  //       }
+  //     },
+  //     fail: function () {
+
+  //       if (res.errMsg == 'shareAppMessage:fail cancel') {
+  //         // 用户取消转发
+  //       } else if (res.errMsg == 'shareAppMessage:fail') {
+  //       }
+  //     }
+  //   }
+
+  //   return shareObj
+  // },
 })

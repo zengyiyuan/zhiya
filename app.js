@@ -1,6 +1,7 @@
 //app.js
 App({
-  onLaunch: function () {
+  onLaunch: function (options) {
+    // console.log(options.shareCustomerId)
     var that = this;
     wx.login({
       success(res) {
@@ -24,7 +25,8 @@ App({
                     success: res => {
                   
                      var  userInfo = JSON.parse(res.rawData)
-                      // 可以将 res 发送给后台解码出 unionId
+                      
+                      
                         that.globalData.userInfo = JSON.parse(res.rawData);
                       that.cb = function (res) {
                         // console.log(.globalData.userInfo)

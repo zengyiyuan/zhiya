@@ -34,7 +34,7 @@ Page({
                 url: 'https://openapi.zhiyajob.com:8443/openapi/addCustomerWithMpOpenId?openId=' + app.globalData.openId + '&nickname=' + res.userInfo.nickName + '&imgUrl=' + res.userInfo.avatarUrl,
                 success(res) {
                   console.log(res.data)
-                  wx.setStorageSync('customerId', res.customerId);
+                  wx.setStorageSync('customerId', res.data);
                 }
               })
 						}
@@ -98,7 +98,4 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-  
-  }
 })

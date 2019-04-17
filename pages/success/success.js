@@ -12,9 +12,9 @@ Page({
       url: '/pages/index/index',
     })
   },
-  goOrderDesc(){
+  goMyOrder(){
     wx.navigateTo({
-      url: '/pages/orderDesc/orderDesc?orderId='+this.data.orderId,
+      url: '/pages/myOrder/myOrder',
     })
   },
   /**
@@ -66,11 +66,4 @@ Page({
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

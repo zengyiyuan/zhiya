@@ -4,7 +4,7 @@
   </view>
 </view>
 <view class='used' id='couponUsed' wx:if="{{tabCur==1}}">
-  <view class="coupon-box" orderid="7" wx:for="{{couponList}}">
+  <view class="coupon-box" orderid="7" wx:for="{{coupon2}}" wx:key="index">
    
       <view class="left">
         <view class="title">已观摩{{item.interviewOrderTitle}}</view>
@@ -15,13 +15,22 @@
       <button class="continue-watch" data-orderid="{{item.interviewOrderId}}" catchtap='goOrderDesc'>继续观看</button>
   </view>
 </view>
-<view class="overdue" style="" id="couponExpiredTime" wx:if="{{tabCur!==1}}">
-  <view class="coupon-box finished"  wx:for="{{couponList}}">
+<view class="overdue" style="" id="couponExpiredTime" wx:if="{{tabCur==0}}">
+  <view class="coupon-box finished"  wx:for="{{coupon1}}" wx:key="index">
     <view class="left">
       <view class="title">{{item.interviewOrderTitle}}</view>
       <view class="time">有效期至：{{item.endTime}}</view>
       <view class="solid"></view>
-      <image src="../../image/img_ugq@3x.png" alt="" wx:if="{{tabCur==2}}"></image>
+    </view>
+  </view>
+</view>
+<view class="overdue" style="" id="couponExpiredTime" wx:if="{{tabCur==2}}">
+  <view class="coupon-box finished"  wx:for="{{coupon3}}" wx:key="index">
+    <view class="left">
+      <view class="title">{{item.interviewOrderTitle}}</view>
+      <view class="time">有效期至：{{item.endTime}}</view>
+      <view class="solid"></view>
+      <image src="../../image/img_ugq@3x.png" alt=""></image>
     </view>
   </view>
 </view>

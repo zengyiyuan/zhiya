@@ -1,6 +1,6 @@
 <view class="mys">
 <view class=" text-xsl text-center padding">
-  <text class='text-red icon-close success'></text>
+  <text class='text-red icon icon-close success'></text>
 </view>
 <view class='title text-xxl text-center padding'>
   <text class='text-grey'>{{errMsg?errMsg:'订单支付失败'}}</text>
