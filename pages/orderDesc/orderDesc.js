@@ -14,6 +14,7 @@ Page({
     orderId:0,
     orderList:[],
     isbuy:0,
+    isPlay:false,
     orderDesc:{},
     pageVideoSize:3,
     pageCommentSize: 3,
@@ -21,6 +22,7 @@ Page({
     isZan:false,
     defaultValue:'',
     commentList:[],
+    isMore:false,
   },
   tabSelect(e) {
     console.log(e);
@@ -29,10 +31,16 @@ Page({
       scrollLeft: (e.currentTarget.dataset.id-1)*60
     })
   },
+  showMore(){
+    this.setData({isMore:!this.data.isMore})
+  },
   // 获取视频地址
   getsrc(){
     // console.log(111)
     this.setData({ src:'../../video/video/59b6bb1098e51.mp4'})
+  },
+  toPlay(){
+    this.setData({isPlay:true})
   },
   // 去订单支付页
   toOrderPay(){

@@ -1,68 +1,10 @@
 
 var city = [
-  {
-    title: "热门城市",
-    type: 'hot',
-    item: [
-
-      {
-        "name": "北京",
-        "key": "热门",
-        "test": "testValue"
-      },
-      {
-        "name": "上海",
-        "key": "热门"
-      },
-      {
-        "name": "广州",
-        "key": "热门"
-      },
-      {
-        "name": "深圳",
-        "key": "热门"
-      },
-      {
-        "name": "成都",
-        "key": "热门"
-      },
-
-      {
-        "name": "重庆",
-        "key": "热门"
-      },
-      {
-        "name": "天津",
-        "key": "热门"
-      },
-      {
-        "name": "杭州",
-        "key": "热门"
-      },
-      {
-        "name": "南京",
-        "key": "热门"
-      },
-      {
-        "name": "苏州",
-        "key": "热门"
-      },
-      {
-        "name": "武汉",
-        "key": "热门"
-      },
-
-      {
-        "name": "西安",
-        "key": "热门"
-      }
-
-    ]
-  }, {
+   {
     title: "A",
     item: [
       {
-        "name": "澳门",
+        "name": "ALL",
         "key": "A"
       }
     ]
@@ -98,15 +40,6 @@ var city = [
         "key": "D"
       }
       
-    ]
-  }, {
-    title: "E",
-    item: [
-    ]
-  }, {
-    title: "F",
-    item: [
-     
     ]
   }, {
     title: "G",
@@ -148,19 +81,6 @@ var city = [
       }
     ]
   }, {
-
-    title: "L",
-    item: [
-      
-    ]
-  }, {
-
-    title: "M",
-    item: [
-      
-
-    ]
-  }, {
     title: "N",
     item: [
 
@@ -170,27 +90,7 @@ var city = [
       }
 
     ]
-  }, {
-    title: "P",
-    item: [
-
-      
-    ]
-  }, {
-    title: "Q",
-    item: [
-
-      
-
-
-    ]
-  }, {
-
-    title: "R",
-    item: [
-     
-    ]
-  }, {
+  },  {
 
     title: "S",
     item: [
@@ -242,14 +142,7 @@ var city = [
       }
       
     ]
-  }, {
-    title: "Y",
-    item: [
-
-    
-
-    ]
-  }, {
+  },{
 
     title: "Z",
     item: [

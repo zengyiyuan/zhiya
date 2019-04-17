@@ -2,8 +2,9 @@
 
 video,
 .mask{
+  position: relative;
   width: 100%;
-  height: 450rpx;
+  height: 400rpx;
   background-color: #f4f4f4;
 }
 
@@ -18,7 +19,7 @@ video,
 
 .mask image {
   width: 100%;
-  height: 450rpx;
+  height: 400rpx;
 }
 
 .mask button {
@@ -33,6 +34,17 @@ video,
   border: 1px solid #fff;
   border-radius: 60rpx;
 }
+.mask .play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  /* background-color: transparent; */
+  border-radius:50%; 
+  padding: 30rpx;
+  background: rgba(0, 0, 0, 0.3);
+}
 
 /* .desc image.avatar1 {
    background-image: url(../../image/avatar1.png);
@@ -44,7 +56,7 @@ video,
 }
 
 .desc {
-  margin-top: 540rpx;
+  margin-top: 490rpx;
   background-color: #fff;
   padding: 10rpx 0rpx;
 }
@@ -202,6 +214,7 @@ video,
 .comment {
   margin-top: 540rpx;
 }
+
 .mystatu>text {
   padding-right: 13rpx;
 }
@@ -226,10 +239,10 @@ video,
   margin-bottom:160rpx; 
 }
 .face .image {
-  height: 240rpx;
+  height: 194rpx;
 }
 .face image {
-  height: 240rpx;
+  height: 194rpx;
 }
 .facetitle ,
 .facewriter {
@@ -241,3 +254,38 @@ video,
   white-space:nowrap;
   /* height: 500rpx; */
 }
+.mystatu image {
+  width: 62rpx;
+  height: 56rpx;
+  margin-right: 10rpx;
+}
+.mybuttom {
+  min-height: 100rpx;
+  padding: 20rpx 0;
+}
+.mybuttom .mytextarea {
+  min-height: 100rpx;
+  background:#f5f5f5;
+  max-height:192rpx;
+  
+font-size:24rpx;
+color:#666;
+flex:1;
+display:flex;
+align-items:center;
+margin:0 20rpx;
+
+}
+.mybuttom .mytextarea textarea {
+  height: 100%;
+}
+.mybuttom .mytextarea .overhidden {
+  flex: 1;
+  max-height: 192rpx;
+  overflow: hidden;
+}
+/* .focusInput,
+.mybuttom ,
+.mybuttom .search-form {
+  height: 128rpx!important;
+} */

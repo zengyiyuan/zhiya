@@ -41,6 +41,11 @@ Page({
       }
     })
   },
+  goOrderDesc(e){
+    wx.navigateTo({
+      url: '/pages/orderDesc/orderDesc?orderId='+e.currentTarget.dataset.orderid,
+    })
+  },
   // 去支付
   goOrderPay(e){
     var orderInfo
