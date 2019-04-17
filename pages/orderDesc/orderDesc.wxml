@@ -1,11 +1,12 @@
-<!--pages/orderDesc/orderDesc.wxml-->
+
 <!-- 视频框 -->
 <view class='fixed'>
-  <video wx:if="{{isbuy==1}}" src="{{orderDesc.resumeUrl}}" object-fit="contain" enable-play-gesture="true" controls poster="{orderDesc.orderImg}}" bindplay="getsrc"></video>
+  <video wx:if="{{isPlay}}" src="{{orderDesc.resumeUrl}}" object-fit="contain" enable-play-gesture="true" controls poster="{orderDesc.orderImg}}" bindplay="getsrc" fixed='true' autoplay></video>
 
-  <view wx:if="{{isbuy==0}}" class='mask'>
+  <view wx:if="{{!isPlay}}" class='mask'>
     <image src="{{orderDesc.orderImg}}"></image>
-    <button bindtap="toOrderPay" class='cu-btn round lines-cyan text-cyan'>{{orderDesc.inspectPrice}}付费观摩</button>
+    <button catchtap="toOrderPay" class='cu-btn round lines-cyan text-cyan' wx:if="{{isbuy==0}}">{{orderDesc.inspectPrice}}付费观摩</button>
+    <view catchtap='toPlay' class='play' wx:if="{{isbuy==1}}"><text class='icon-playfill text-white text-xxl'></text></view>
   </view>
   <!-- tab切换 -->
   <scroll-view scroll-x class="bg-white nav">
@@ -50,10 +51,13 @@
     <view class='title'>{{orderDesc.title}}</view>
     <view class='content'>
       <view class='sTitle'>面试简介</view>
-      <view class='subcontent'>
+      
+      <text class='{{isMore?"icon-fold":"icon-unfold"}} text-xxl more' catchtap='showMore'></text>
+      <view class='{{isMore?"":"subcontent"}}'>
         {{orderDesc.detail}}
       </view>
     </view>
+
     <view class='content' wx:if="{{!orderDesc.isOpen}}">
       <view class='sTitle'>面试评语</view>
       <view class='subcontent'>
@@ -103,17 +107,12 @@
         <view class='text-gray text-content text-df'>
           {{item.evaluateContent}}
         </view>
-        <!-- <view class='bg-grey padding-sm radius margin-top-sm  text-sm' wx:if="{{index==1}}">
-          <view class="flex {{index!=0?'margin-top-sm':'' }}" wx:for="{{2}}" wx:key>
-            <view>我：</view>
-            <view class='flex-sub'>我家的铲屎官也不舔毛！</view>
-          </view>
-        </view> -->
+       
         <view class='margin-top-sm flex justify-between'>
           <view class='text-gray text-df'>{{item.updateDate}}</view>
           <view>
-            <text class="icon-appreciate{{!isZan?'fill':''}} text-{{!isZan?'red':'gray'}}"></text>
-            <text class="icon-messagefill text-gray margin-left-sm" bandtap="comment"></text>
+            <!-- <text class="icon-appreciate{{!isZan?'fill':''}} text-{{!isZan?'red':'gray'}}"></text>
+            <text class="icon-messagefill text-gray margin-left-sm" bandtap="comment"></text> -->
           </view>
         </view>
       </view>

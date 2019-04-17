@@ -9,7 +9,7 @@
   <view class="cu-item arrow" bindtap='getNickName'>
     <view class='content userInfo' >
       <text class='text-black'>昵称</text>
-       <text class='text-black name'><text>{{userInfo.nickName}}</text></text>
+       <text class='text-black name'><text>{{nickName?nickName:userInfo.nickName}}</text></text>
     </view> 
   </view>
 </view>

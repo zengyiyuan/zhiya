@@ -7,7 +7,7 @@
   </view>
   <!--渲染 全部 的其他订单  -->
  
-  <view class='order-lis' wx:for='{{orderList}}' data-index='{{index}}' wx:key='orderList' bindtap='ordersDetail' >
+  <view class='order-lis' wx:for='{{orderList}}' data-index='{{index}}' wx:key='orderList' >
     <view class='order-li'>
        <view class='li-top'>
         <navigator bindtap='goProduct' class='text-grey'>订单号：{{item.inspectCode}}</navigator>
@@ -19,9 +19,10 @@
       <view class='li-top'>
        <text class='text-grey'>{{item.createDate}}</text> 
        <view class='status' wx:if="{{item.inspectStatus=='0'}}"><button class='cu-btn line-home' catchtap='cancelInspect' data-inspect="{{item.inspectId}}">取消订单</button><button class='cu-btn bg-home' catchtap='goOrderPay' data-orderid="{{item.inspectId}}">立即支付</button></view>
-      </view>
-      <view class='status' wx:if="{{item.inspectStatus=='1'}}"><button class='cu-btn bg-home'>立即观摩</button></view>
+     
+      <view class='status' wx:if="{{item.inspectStatus=='1'}}"><button class='cu-btn bg-home' catchtap='goOrderDesc' data-orderid="{{item.orderId}}">立即观摩</button></view>
       <view class='status' wx:if="{{item.inspectStatus=='2'}}"><button class='cu-btn bg-home'>立即评价</button></view>
+       </view>
     </view>
   </view>
 
